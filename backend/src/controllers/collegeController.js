@@ -255,3 +255,63 @@ exports.getFilterOptions = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+exports.importBranches = async (req, res) => {
+  const { collegesBranches } = req.body;
+  if (!collegesBranches || !Array.isArray(collegesBranches)) {
+    return res.status(400).json({ error: 'Invalid payload. Must be an array of college objects with branches.' });
+  }
+
+  const client = await db.pool.connect();
+  try {
+    await client.query('BEGIN');
+    
+    let successCount = 0;
+    for (const item of collegesBranches) {
+      const { collegeCode, branches } = item;
+      if (!collegeCode || !Array.isArray(branches)) continue;
+
+      // Find the college ID or auto-create it if missing
+      const colRes = await client.query('SELECT id FROM colleges WHERE code = $1', [collegeCode]);
+      let collegeId;
+      if (colRes.rows.length === 0) {
+        const insertCol = await client.query(
+          `INSERT INTO colleges (name, code, district, region, type, autonomous, priority, logo_url)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+          [collegeCode, collegeCode, 'Chittoor', 'SVE', 'Engineering', false, 100, '/uploads/default-logo.png']
+        );
+        collegeId = insertCol.rows[0].id;
+      } else {
+        collegeId = colRes.rows[0].id;
+      }
+
+      // Clear existing branches for this college to prevent duplicates
+      await client.query('DELETE FROM college_branches WHERE college_id = $1', [collegeId]);
+
+      // Insert new branches
+      for (const br of branches) {
+        const brCode = br.branchCode || br.code;
+        const brName = br.branchName || br.name;
+        const totalSeats = br.totalSeats !== undefined ? br.totalSeats : (br.total || 0);
+        const leftoverSeats = br.leftoverSeats !== undefined ? br.leftoverSeats : (br.leftover || 0);
+        const fee = br.fee;
+
+        await client.query(
+          `INSERT INTO college_branches (college_id, branch_code, branch_name, total_seats, leftover_seats, fee)
+           VALUES ($1, $2, $3, $4, $5, $6)`,
+          [collegeId, brCode, brName, totalSeats, leftoverSeats, fee]
+        );
+      }
+      successCount++;
+    }
+
+    await client.query('COMMIT');
+    res.json({ message: `Successfully imported branches for ${successCount} colleges.` });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    console.error('Import branches transaction error:', err);
+    res.status(500).json({ error: 'Failed to import branches.' });
+  } finally {
+    client.release();
+  }
+};

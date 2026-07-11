@@ -84,7 +84,11 @@ export const api = {
         throw new Error(data.error || 'CSV import failed');
       }
       return data;
-    }
+    },
+    importBranches: (collegesBranches) => request('/colleges/import-branches', {
+      method: 'POST',
+      body: { collegesBranches }
+    })
   },
   
   feedback: {

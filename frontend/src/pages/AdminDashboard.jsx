@@ -47,6 +47,11 @@ export default function AdminDashboard() {
   const [csvLog, setCsvLog] = useState(null);
   const [csvLoading, setCsvLoading] = useState(false);
 
+  // JSON Import States
+  const [jsonInput, setJsonInput] = useState('');
+  const [jsonLoading, setJsonLoading] = useState(false);
+  const [jsonStatus, setJsonStatus] = useState(null);
+
   // Fetch Dashboard Stats
   const fetchStats = async () => {
     setStatsLoading(true);
@@ -204,6 +209,33 @@ export default function AdminDashboard() {
       alert(err.message || 'CSV Import failed.');
     } finally {
       setCsvLoading(false);
+    }
+  };
+
+  // JSON import handler for branches
+  const handleJSONImport = async (e) => {
+    e.preventDefault();
+    if (!jsonInput.trim()) return;
+    setJsonLoading(true);
+    setJsonStatus(null);
+    try {
+      let parsed;
+      try {
+        parsed = JSON.parse(jsonInput);
+      } catch (err) {
+        throw new Error('Invalid JSON format. Please check for trailing commas or syntax errors.');
+      }
+      if (!Array.isArray(parsed)) {
+        throw new Error('JSON payload must be an array of college objects.');
+      }
+
+      const res = await api.colleges.importBranches(parsed);
+      setJsonStatus({ type: 'success', message: res.message || 'Branches successfully imported!' });
+      setJsonInput('');
+    } catch (err) {
+      setJsonStatus({ type: 'error', message: err.message || 'Branches import failed.' });
+    } finally {
+      setJsonLoading(false);
     }
   };
 
@@ -758,6 +790,48 @@ export default function AdminDashboard() {
               )}
             </div>
           )}
+
+          {/* Bulk Import Branches (JSON) Card */}
+          <div className="glass-card rounded-2xl p-8 space-y-6 border border-gray-850">
+            <div className="text-center space-y-1">
+              <h3 className="font-extrabold text-white text-base">Bulk Import College Branches (JSON)</h3>
+              <p className="text-xs text-gray-500">Paste the complete branches JSON array to update course seats and fee registries.</p>
+            </div>
+
+            <form onSubmit={handleJSONImport} className="space-y-4">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label className="text-[10px] text-zinc-400 uppercase font-semibold">JSON Array Content</label>
+                <textarea
+                  rows={8}
+                  placeholder={`[\n  {\n    "collegeCode": "ABRK",\n    "branches": [\n      { "branchCode": "CSE", "branchName": "COMPUTER SCIENCE", "totalSeats": 60, "leftoverSeats": 60, "fee": "42,100" }\n    ]\n  }\n]`}
+                  value={jsonInput}
+                  onChange={(e) => setJsonInput(e.target.value)}
+                  className="input-field p-3 font-mono text-[11px] leading-relaxed bg-[#0c0f1d] border border-gray-800 rounded-lg text-white focus:outline-none"
+                  required
+                />
+              </div>
+
+              {jsonStatus && (
+                <div className={`p-3 rounded-lg text-xs border ${
+                  jsonStatus.type === 'success'
+                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                    : 'bg-rose-500/10 border-rose-500/20 text-rose-450'
+                }`}>
+                  {jsonStatus.message}
+                </div>
+              )}
+
+              <div className="text-center">
+                <button
+                  type="submit"
+                  disabled={jsonLoading || !jsonInput.trim()}
+                  className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition disabled:opacity-50"
+                >
+                  {jsonLoading ? 'Importing course configurations...' : 'Import Branches JSON'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 
