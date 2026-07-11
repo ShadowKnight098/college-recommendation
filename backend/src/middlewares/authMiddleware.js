@@ -8,7 +8,12 @@ module.exports = (req, res, next) => {
 
   const token = authHeader.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecretjwtkeyforcollegepredictor123');
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      console.error('CRITICAL SECURITY ALERT: JWT_SECRET environment variable is missing.');
+      return res.status(500).json({ error: 'Internal server configuration error.' });
+    }
+    const decoded = jwt.verify(token, secret);
     req.user = decoded;
     next();
   } catch (error) {

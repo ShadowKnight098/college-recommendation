@@ -31,7 +31,7 @@ export default function CollegeListPage() {
   const [filterOptions, setFilterOptions] = useState({ regions: [], districts: [], types: [] });
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [viewMode, setViewMode] = useState('list');
+  const [viewMode, setViewMode] = useState('card');
 
   useEffect(() => {
     const loadFilters = async () => {
@@ -139,11 +139,10 @@ export default function CollegeListPage() {
                     setTimeout(() => fetchColleges(), 50);
                   }}
                 >
-                  <div className="w-7 h-7 rounded-md bg-zinc-800 flex items-center justify-center text-zinc-400 text-[10px] font-bold uppercase">
-                    {s.code?.slice(0, 2)}
-                  </div>
-                  <span className="text-sm text-zinc-300 flex-grow truncate">{s.name}</span>
-                  <span className="text-[11px] text-zinc-600 font-mono">{s.code}</span>
+                  <span className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 text-[10px] font-mono font-semibold uppercase flex-shrink-0">
+                    {s.code}
+                  </span>
+                  <span className="text-xs sm:text-sm text-zinc-300 flex-grow truncate">{s.name}</span>
                 </div>
               ))}
             </div>
@@ -352,13 +351,42 @@ export default function CollegeListPage() {
                 <h3 className="text-sm font-semibold text-white mt-2 line-clamp-2">{college.name}</h3>
                 
                 {/* Meta */}
-                <div className="mt-2 space-y-1">
-                  <div className="flex items-center gap-1.5 text-[12px] text-zinc-500">
-                    <MapPin size={12} /> {college.district}
+                <div className="mt-2 space-y-2">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-1.5 text-[12px] text-zinc-500">
+                      <MapPin size={12} className="flex-shrink-0" /> {college.district}
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[12px] text-zinc-500">
+                      <Building2 size={12} className="flex-shrink-0" /> {college.type}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[12px] text-zinc-500">
-                    <Building2 size={12} /> {college.type}
+                  {/* Additional details */}
+                  <div className="flex flex-wrap gap-1.5 pt-0.5">
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono">
+                      NAAC: {college.naac_grade || 'N/A'}
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono">
+                      {college.nba_status === 'Accredited' ? 'NBA' : 'No NBA'}
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 font-mono">
+                      {college.autonomous ? 'Auto' : 'Affil'}
+                    </span>
                   </div>
+                  {/* Courses Offered list */}
+                  {college.branches && college.branches.length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-2 border-t border-zinc-800/30">
+                      {college.branches.slice(0, 5).map((brCode) => (
+                        <span key={brCode} className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/5 border border-emerald-500/10 text-emerald-450 font-mono">
+                          {brCode}
+                        </span>
+                      ))}
+                      {college.branches.length > 5 && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 font-mono">
+                          +{college.branches.length - 5}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
                 
                 {/* Bottom */}

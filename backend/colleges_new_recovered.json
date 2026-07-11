@@ -1,0 +1,1968 @@
+[
+  {
+    "collegeCode": "ABRK",
+    "branches": [
+      {
+        "branchCode": "AGR",
+        "branchName": "AGRICULTURAL ENGINEERING",
+        "totalSeats": 52,
+        "leftoverSeats": 52,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 52,
+        "leftoverSeats": 52,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "CAI",
+        "branchName": "COMP. SCI. AND ENGG. (ARTIFICIAL INTELLIGENCE )",
+        "totalSeats": 28,
+        "leftoverSeats": 28,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 45,
+        "leftoverSeats": 45,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 53,
+        "leftoverSeats": 53,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 50,
+        "leftoverSeats": 50,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 46,
+        "leftoverSeats": 46,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 53,
+        "leftoverSeats": 53,
+        "fee": "42,100"
+      },
+      {
+        "branchCode": "MIN",
+        "branchName": "MINING ENGINEERING",
+        "totalSeats": 26,
+        "leftoverSeats": 26,
+        "fee": "42,100"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ACEE",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 51,
+        "leftoverSeats": 51,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "AIM",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "totalSeats": 38,
+        "leftoverSeats": 38,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 47,
+        "leftoverSeats": 47,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 52,
+        "leftoverSeats": 52,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 42,
+        "leftoverSeats": 42,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ACEM",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 15,
+        "leftoverSeats": 15,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 20,
+        "leftoverSeats": 20,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CAI",
+        "branchName": "COMP. SCI. AND ENGG. (ARTIFICIAL INTELLIGENCE )",
+        "totalSeats": 14,
+        "leftoverSeats": 14,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 28,
+        "leftoverSeats": 28,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 15,
+        "leftoverSeats": 15,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 20,
+        "leftoverSeats": 20,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 23,
+        "leftoverSeats": 23,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ACEV",
+    "branches": [
+      {
+        "branchCode": "AI",
+        "branchName": "ARTIFICIAL INTELLIGENCE",
+        "totalSeats": 36,
+        "leftoverSeats": 36,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 129,
+        "leftoverSeats": 129,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 50,
+        "leftoverSeats": 50,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECM",
+        "branchName": "ELECTRONICS AND COMPUTER ENGINEERING",
+        "totalSeats": 54,
+        "leftoverSeats": 54,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ADIT",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 36,
+        "leftoverSeats": 36,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 54,
+        "leftoverSeats": 54,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "CSC",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 42,
+        "leftoverSeats": 42,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "79,600"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 29,
+        "leftoverSeats": 29,
+        "fee": "79,600"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AECN",
+    "branches": [
+      {
+        "branchCode": "AIM",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 9,
+        "leftoverSeats": 9,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 15,
+        "leftoverSeats": 15,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AITK",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 36,
+        "leftoverSeats": 36,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 22,
+        "leftoverSeats": 22,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 73,
+        "leftoverSeats": 73,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 59,
+        "leftoverSeats": 59,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 52,
+        "leftoverSeats": 52,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 112,
+        "leftoverSeats": 112,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AITT",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "AIM",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 32,
+        "leftoverSeats": 32,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 55,
+        "leftoverSeats": 55,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 20,
+        "leftoverSeats": 20,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIT",
+        "branchName": "COMPUTER SCIENCE AND INFORMATION TECHNOLOGY",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIC",
+        "branchName": "CSE (IOT & CYBER SECURITY WITH BLOCK CHAIN TECH)",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 29,
+        "leftoverSeats": 29,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ALIT",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 34,
+        "leftoverSeats": 34,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 29,
+        "leftoverSeats": 29,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 13,
+        "leftoverSeats": 13,
+        "fee": "50,700"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 36,
+        "leftoverSeats": 36,
+        "fee": "50,700"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ALTS",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "CAI",
+        "branchName": "COMP. SCI. AND ENGG. (ARTIFICIAL INTELLIGENCE )",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 62,
+        "leftoverSeats": 62,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 30,
+        "leftoverSeats": 30,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 32,
+        "leftoverSeats": 32,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 44,
+        "leftoverSeats": 44,
+        "fee": "61,100"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 23,
+        "leftoverSeats": 23,
+        "fee": "61,100"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AMRN",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 97,
+        "leftoverSeats": 97,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 34,
+        "leftoverSeats": 34,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CS",
+        "branchName": "CYBER SECURITY",
+        "totalSeats": 23,
+        "leftoverSeats": 23,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 71,
+        "leftoverSeats": 71,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ANCUSF",
+    "branches": [
+      {
+        "branchCode": "AIM",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 9,
+        "leftoverSeats": 9,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "CS",
+        "branchName": "CYBER SECURITY",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "DS",
+        "branchName": "DATA SCIENCE",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "44,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 23,
+        "leftoverSeats": 23,
+        "fee": "44,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ANIL",
+    "branches": [
+      {
+        "branchCode": "BIO",
+        "branchName": "BIO-TECHNOLOGY",
+        "totalSeats": 5,
+        "leftoverSeats": 5,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "CHE",
+        "branchName": "CHEMICAL ENGINEERING",
+        "totalSeats": 3,
+        "leftoverSeats": 3,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 38,
+        "leftoverSeats": 38,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "CSC",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 20,
+        "leftoverSeats": 20,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "84,100"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "84,100"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ANMB",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 48,
+        "leftoverSeats": 48,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 26,
+        "leftoverSeats": 26,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ANRG",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 49,
+        "leftoverSeats": 49,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 28,
+        "leftoverSeats": 28,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 48,
+        "leftoverSeats": 48,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 54,
+        "leftoverSeats": 54,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ANSN",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "CSC",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "CSO",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (IOT)",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 13,
+        "leftoverSeats": 13,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 30,
+        "leftoverSeats": 30,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "56,800"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "56,800"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ANURSF",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 28,
+        "leftoverSeats": 28,
+        "fee": "35,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 8,
+        "leftoverSeats": 8,
+        "fee": "35,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "35,000"
+      },
+      {
+        "branchCode": "EIE",
+        "branchName": "ELECTRONICS AND INSTRUMENTATION ENGINEERING",
+        "totalSeats": 34,
+        "leftoverSeats": 34,
+        "fee": "35,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 19,
+        "leftoverSeats": 19,
+        "fee": "35,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ARTB",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 75,
+        "leftoverSeats": 75,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSC",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "totalSeats": 34,
+        "leftoverSeats": 34,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 43,
+        "leftoverSeats": 43,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 77,
+        "leftoverSeats": 77,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 49,
+        "leftoverSeats": 49,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 87,
+        "leftoverSeats": 87,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 47,
+        "leftoverSeats": 47,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ASET",
+    "branches": [
+      {
+        "branchCode": "CAI",
+        "branchName": "COMP. SCI. AND ENGG. (ARTIFICIAL INTELLIGENCE )",
+        "totalSeats": 23,
+        "leftoverSeats": 23,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 60,
+        "leftoverSeats": 60,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 20,
+        "leftoverSeats": 20,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 13,
+        "leftoverSeats": 13,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 54,
+        "leftoverSeats": 54,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ASIP",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 123,
+        "leftoverSeats": 123,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 62,
+        "leftoverSeats": 62,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "CBA",
+        "branchName": "COMPUTER SCIENCE ENGINEERING (BIG DATA ANALYTICS)",
+        "totalSeats": 50,
+        "leftoverSeats": 50,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 14,
+        "leftoverSeats": 14,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "CIC",
+        "branchName": "CSE (IOT & CYBER SECURITY WITH BLOCK CHAIN TECH)",
+        "totalSeats": 28,
+        "leftoverSeats": 28,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 57,
+        "leftoverSeats": 57,
+        "fee": "66,800"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "66,800"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ASKW",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "50,000"
+      },
+      {
+        "branchCode": "CAI",
+        "branchName": "COMP. SCI. AND ENGG. (ARTIFICIAL INTELLIGENCE )",
+        "totalSeats": 42,
+        "leftoverSeats": 42,
+        "fee": "50,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 31,
+        "leftoverSeats": 31,
+        "fee": "50,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 10,
+        "leftoverSeats": 10,
+        "fee": "50,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "50,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ASKWOC",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 13,
+        "leftoverSeats": 13,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 9,
+        "leftoverSeats": 9,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ASTC",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 162,
+        "leftoverSeats": 162,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 67,
+        "leftoverSeats": 67,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 42,
+        "leftoverSeats": 42,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 84,
+        "leftoverSeats": 84,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 37,
+        "leftoverSeats": 37,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "ASVR",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 26,
+        "leftoverSeats": 26,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CAI",
+        "branchName": "COMP. SCI. AND ENGG. (ARTIFICIAL INTELLIGENCE )",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 56,
+        "leftoverSeats": 56,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 33,
+        "leftoverSeats": 33,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 51,
+        "leftoverSeats": 51,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 38,
+        "leftoverSeats": 38,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AUCE",
+    "branches": [
+      {
+        "branchCode": "BIO",
+        "branchName": "BIO-TECHNOLOGY",
+        "totalSeats": 4,
+        "leftoverSeats": 4,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "CHE",
+        "branchName": "CHEMICAL ENGINEERING",
+        "totalSeats": 8,
+        "leftoverSeats": 8,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 4,
+        "leftoverSeats": 4,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 10,
+        "leftoverSeats": 10,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "GIN",
+        "branchName": "GEO-INFORMATICS",
+        "totalSeats": 5,
+        "leftoverSeats": 5,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "IST",
+        "branchName": "INSTRUMENTATION ENGINEERING",
+        "totalSeats": 5,
+        "leftoverSeats": 5,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 8,
+        "leftoverSeats": 8,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "MET",
+        "branchName": "METALLURGICAL ENGINEERING",
+        "totalSeats": 4,
+        "leftoverSeats": 4,
+        "fee": "44,500"
+      },
+      {
+        "branchCode": "NAM",
+        "branchName": "NAVAL ARCHITECTURE AND MARINE ENGINEERING",
+        "totalSeats": 4,
+        "leftoverSeats": 4,
+        "fee": "44,500"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AUCESF",
+    "branches": [
+      {
+        "branchCode": "ENV",
+        "branchName": "ENVIRONMENTAL ENGINERRING",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "76,900"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "76,900"
+      },
+      {
+        "branchCode": "QC",
+        "branchName": "QUANTUM COMPUTING",
+        "totalSeats": 4,
+        "leftoverSeats": 4,
+        "fee": "76,900"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AUEWSF",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "62,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "62,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 8,
+        "leftoverSeats": 8,
+        "fee": "62,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "62,000"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "62,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "62,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AVEN",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 110,
+        "leftoverSeats": 110,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 13,
+        "leftoverSeats": 13,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 35,
+        "leftoverSeats": 35,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 29,
+        "leftoverSeats": 29,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 29,
+        "leftoverSeats": 29,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "AVEV",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 48,
+        "leftoverSeats": 48,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 16,
+        "leftoverSeats": 16,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 26,
+        "leftoverSeats": 26,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 9,
+        "leftoverSeats": 9,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 37,
+        "leftoverSeats": 37,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 36,
+        "leftoverSeats": 36,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BABA",
+    "branches": [
+      {
+        "branchCode": "AIM",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 45,
+        "leftoverSeats": 45,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 33,
+        "leftoverSeats": 33,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CS",
+        "branchName": "CYBER SECURITY",
+        "totalSeats": 19,
+        "leftoverSeats": 19,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 49,
+        "leftoverSeats": 49,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 48,
+        "leftoverSeats": 48,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 29,
+        "leftoverSeats": 29,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BCET",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 102,
+        "leftoverSeats": 102,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 46,
+        "leftoverSeats": 46,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 49,
+        "leftoverSeats": 49,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 22,
+        "leftoverSeats": 22,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BECB",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 31,
+        "leftoverSeats": 31,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "CSC",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "totalSeats": 11,
+        "leftoverSeats": 11,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "CSD",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING (DATA SCIENCE)",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 16,
+        "leftoverSeats": 16,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 35,
+        "leftoverSeats": 35,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 22,
+        "leftoverSeats": 22,
+        "fee": "84,900"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 9,
+        "leftoverSeats": 9,
+        "fee": "84,900"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BEMA",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 17,
+        "leftoverSeats": 17,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 67,
+        "leftoverSeats": 67,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 3,
+        "leftoverSeats": 3,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 24,
+        "leftoverSeats": 24,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 6,
+        "leftoverSeats": 6,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 25,
+        "leftoverSeats": 25,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BITS",
+    "branches": [
+      {
+        "branchCode": "AI",
+        "branchName": "ARTIFICIAL INTELLIGENCE",
+        "totalSeats": 18,
+        "leftoverSeats": 18,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 33,
+        "leftoverSeats": 33,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 43,
+        "leftoverSeats": 43,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BRAUSF",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 62,
+        "leftoverSeats": 62,
+        "fee": "48,500"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 14,
+        "leftoverSeats": 14,
+        "fee": "48,500"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 39,
+        "leftoverSeats": 39,
+        "fee": "48,500"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 13,
+        "leftoverSeats": 13,
+        "fee": "48,500"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 55,
+        "leftoverSeats": 55,
+        "fee": "48,500"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BRNK",
+    "branches": [
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 73,
+        "leftoverSeats": 73,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 26,
+        "leftoverSeats": 26,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 27,
+        "leftoverSeats": 27,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BVCE",
+    "branches": [
+      {
+        "branchCode": "AIM",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "CIV",
+        "branchName": "CIVIL ENGINEERING",
+        "totalSeats": 22,
+        "leftoverSeats": 22,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 22,
+        "leftoverSeats": 22,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 8,
+        "leftoverSeats": 8,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "CAD",
+        "branchName": "CSE (ARTIFICIAL INTELLIGENCE & DATA SCEINCE)",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "EEE",
+        "branchName": "ELECTRICAL AND ELECTRONICS ENGINEERING",
+        "totalSeats": 16,
+        "leftoverSeats": 16,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 22,
+        "leftoverSeats": 22,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 7,
+        "leftoverSeats": 7,
+        "fee": "48,800"
+      },
+      {
+        "branchCode": "MEC",
+        "branchName": "MECHANICAL ENGINEERING",
+        "totalSeats": 21,
+        "leftoverSeats": 21,
+        "fee": "48,800"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BVCR",
+    "branches": [
+      {
+        "branchCode": "AID",
+        "branchName": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "totalSeats": 12,
+        "leftoverSeats": 12,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 42,
+        "leftoverSeats": 42,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 23,
+        "leftoverSeats": 23,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 73,
+        "leftoverSeats": 73,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "INF",
+        "branchName": "INFORMATION TECHNOLOGY",
+        "totalSeats": 50,
+        "leftoverSeats": 50,
+        "fee": "40,000"
+      }
+    ]
+  },
+  {
+    "collegeCode": "BVRM",
+    "branches": [
+      {
+        "branchCode": "CSE",
+        "branchName": "COMPUTER SCIENCE AND ENGINEERING",
+        "totalSeats": 111,
+        "leftoverSeats": 111,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "CSM",
+        "branchName": "CSE(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "totalSeats": 50,
+        "leftoverSeats": 50,
+        "fee": "40,000"
+      },
+      {
+        "branchCode": "ECE",
+        "branchName": "ELECTRONICS AND COMMUNICATION ENGINEERING",
+        "totalSeats": 48,
+        "leftoverSeats": 48,
+        "fee": "40,000"
+      }
+    ]
+  }
+]

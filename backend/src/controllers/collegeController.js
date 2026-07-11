@@ -6,7 +6,7 @@ exports.getAllColleges = async (req, res) => {
   const { district, type, region, autonomous, search, sortBy, order, page = 1, limit = 10 } = req.query;
   const offset = (page - 1) * limit;
 
-  let queryText = 'SELECT * FROM colleges WHERE 1=1';
+  let queryText = 'SELECT *, (SELECT json_agg(branch_code) FROM college_branches WHERE college_id = colleges.id) as branches FROM colleges WHERE 1=1';
   const queryParams = [];
   let paramIndex = 1;
 
@@ -37,7 +37,7 @@ exports.getAllColleges = async (req, res) => {
   }
 
   // Count total matching colleges (for pagination metadata)
-  let countQueryText = queryText.replace('SELECT *', 'SELECT COUNT(*)');
+  let countQueryText = 'SELECT COUNT(*) ' + queryText.substring(queryText.indexOf('FROM colleges'));
   const countResult = await db.query(countQueryText, queryParams);
   const totalCount = parseInt(countResult.rows[0].count);
 
@@ -76,7 +76,11 @@ exports.getCollegeById = async (req, res) => {
       return res.status(404).json({ error: 'College not found' });
     }
 
-    res.json({ college: collegeRes.rows[0] });
+    const branchesRes = await db.query('SELECT * FROM college_branches WHERE college_id = $1 ORDER BY branch_code', [id]);
+    res.json({
+      college: collegeRes.rows[0],
+      branches: branchesRes.rows
+    });
   } catch (error) {
     console.error('Fetch college detail error:', error);
     res.status(500).json({ error: 'Internal server error' });

@@ -28,6 +28,7 @@ export default function AdminDashboard() {
   const [colleges, setColleges] = useState([]);
   const [collegesTotal, setCollegesTotal] = useState(0);
   const [collegesPage, setCollegesPage] = useState(1);
+  const [adminSearch, setAdminSearch] = useState('');
   const [collegesLoading, setCollegesLoading] = useState(false);
   const [showCollegeModal, setShowCollegeModal] = useState(false);
   const [editingCollege, setEditingCollege] = useState(null);
@@ -63,7 +64,7 @@ export default function AdminDashboard() {
   const fetchColleges = async () => {
     setCollegesLoading(true);
     try {
-      const data = await api.colleges.getAll({ page: collegesPage, limit: 6 });
+      const data = await api.colleges.getAll({ page: collegesPage, limit: 6, search: adminSearch });
       setColleges(data.colleges);
       setCollegesTotal(data.pagination.total);
     } catch (err) {
@@ -92,7 +93,7 @@ export default function AdminDashboard() {
       fetchColleges();
       fetchFeedbacks();
     }
-  }, [token, collegesPage]);
+  }, [token, collegesPage, adminSearch]);
 
   // Auth Handler
   const handleLogin = async (e) => {
@@ -300,8 +301,8 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-1.5 pb-3 text-xs font-semibold border-b-2 px-1 transition ${
                 activeTab === tab.id
-                  ? 'border-indigo-500 text-indigo-400'
-                  : 'border-transparent text-gray-400 hover:text-white'
+                  ? 'border-emerald-500 text-emerald-500'
+                  : 'border-transparent text-zinc-500 hover:text-white'
               }`}
             >
               <Icon size={14} />
@@ -318,58 +319,58 @@ export default function AdminDashboard() {
         <div className="space-y-8">
           {statsLoading ? (
             <div className="flex justify-center items-center py-20">
-              <div className="w-8 h-8 border-4 border-indigo-600/20 border-t-indigo-500 rounded-full animate-spin" />
+              <div className="w-8 h-8 border-4 border-zinc-800 border-t-emerald-500 rounded-full animate-spin" />
             </div>
           ) : stats && (
             <>
               {/* Stats Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="card p-5 flex items-center justify-between">
                   <div>
-                    <div className="text-3xl font-extrabold text-white">{stats.totalColleges}</div>
-                    <div className="text-[10px] text-gray-450 uppercase font-medium tracking-wide">Colleges Registered</div>
+                    <div className="text-2xl font-bold text-white">{stats.totalColleges}</div>
+                    <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">Colleges Registered</div>
                   </div>
-                  <div className="w-12 h-12 rounded-xl bg-indigo-600/10 text-indigo-400 flex items-center justify-center">
-                    <School size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                    <School size={18} />
                   </div>
                 </div>
 
-                <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+                <div className="card p-5 flex items-center justify-between">
                   <div>
-                    <div className="text-3xl font-extrabold text-white">{stats.totalFeedbacks}</div>
-                    <div className="text-[10px] text-gray-450 uppercase font-medium tracking-wide">Feedbacks Logged</div>
+                    <div className="text-2xl font-bold text-white">{stats.totalFeedbacks}</div>
+                    <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">Feedbacks Logged</div>
                   </div>
-                  <div className="w-12 h-12 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center">
-                    <MessageSquare size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                    <MessageSquare size={18} />
                   </div>
                 </div>
 
-                <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
+                <div className="card p-5 flex items-center justify-between">
                   <div>
-                    <div className="text-3xl font-extrabold text-white">{stats.totalVisits}</div>
-                    <div className="text-[10px] text-gray-450 uppercase font-medium tracking-wide">System Total Page Hits</div>
+                    <div className="text-2xl font-bold text-white">{stats.totalVisits}</div>
+                    <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">Total Viewers</div>
                   </div>
-                  <div className="w-12 h-12 rounded-xl bg-emerald-600/10 text-emerald-400 flex items-center justify-center">
-                    <LineChart size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                    <LineChart size={18} />
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                 {/* Visits history */}
-                <div className="md:col-span-3 glass-card rounded-2xl p-6 space-y-4">
-                  <h3 className="font-bold text-white text-sm">Visits Tracker (Last 7 Days)</h3>
-                  <div className="flex items-end justify-between gap-2 h-44 pt-6 pl-2 pr-2 border-b border-gray-900">
+                <div className="md:col-span-3 card p-5 space-y-4">
+                  <h3 className="font-semibold text-white text-sm">Visits Tracker (Last 7 Days)</h3>
+                  <div className="flex items-end justify-between gap-2 h-44 pt-6 pl-2 pr-2 border-b border-zinc-800">
                     {stats.visitsHistory.map((day, i) => {
                       const maxCount = Math.max(...stats.visitsHistory.map(d => d.count), 1);
                       const barHeight = `${(day.count / maxCount) * 100}%`;
                       return (
                         <div key={i} className="flex-grow flex flex-col items-center gap-2 group">
-                          <div className="text-[9px] text-indigo-400 opacity-0 group-hover:opacity-100 transition duration-150 font-bold">{day.count}</div>
-                          <div className="w-full bg-indigo-600/20 hover:bg-indigo-500 rounded-t-sm transition duration-300 relative" style={{ height: barHeight }}>
-                            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-indigo-400/20 opacity-0 hover:opacity-100 transition rounded-t-sm" />
+                          <div className="text-[9px] text-emerald-500 opacity-0 group-hover:opacity-100 transition duration-150 font-bold">{day.count}</div>
+                          <div className="w-full bg-emerald-500/10 hover:bg-emerald-500 rounded-t-sm transition duration-300 relative" style={{ height: barHeight }}>
+                            <div className="absolute inset-0 bg-emerald-500/5 opacity-0 hover:opacity-100 transition rounded-t-sm" />
                           </div>
-                          <span className="text-[9px] text-gray-500">{new Date(day.visit_date).toLocaleDateString(undefined, {weekday: 'short'})}</span>
+                          <span className="text-[9px] text-zinc-500">{new Date(day.visit_date).toLocaleDateString(undefined, {weekday: 'short'})}</span>
                         </div>
                       );
                     })}
@@ -377,18 +378,18 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Activity log */}
-                <div className="md:col-span-2 glass-card rounded-2xl p-6 space-y-4">
-                  <h3 className="font-bold text-white text-sm">Recent Activities Log</h3>
+                <div className="md:col-span-2 card p-5 space-y-4">
+                  <h3 className="font-semibold text-white text-sm">Recent Activities</h3>
                   {stats.recentActivities.length === 0 ? (
-                    <p className="text-xs text-gray-500 py-6 text-center">No recent entries recorded.</p>
+                    <p className="text-xs text-zinc-500 py-6 text-center">No recent entries recorded.</p>
                   ) : (
                     <div className="space-y-3">
                       {stats.recentActivities.map((act, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs border-b border-gray-900 pb-2.5 last:border-0 last:pb-0">
-                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0" />
+                        <div key={i} className="flex items-start gap-2 text-xs border-b border-zinc-800 pb-2.5 last:border-0 last:pb-0">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
                           <div className="space-y-0.5">
-                            <p className="text-gray-300 leading-snug">{act.message}</p>
-                            <span className="text-[9px] text-gray-500">{new Date(act.time).toLocaleDateString()}</span>
+                            <p className="text-zinc-300 leading-snug">{act.message}</p>
+                            <span className="text-[9px] text-zinc-600">{new Date(act.time).toLocaleDateString()}</span>
                           </div>
                         </div>
                       ))}
@@ -407,23 +408,37 @@ export default function AdminDashboard() {
       {activeTab === 'colleges' && (
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="font-bold text-white text-sm">Registered Colleges ({collegesTotal})</h3>
+            <h3 className="font-semibold text-white text-sm">Colleges Registered ({collegesTotal})</h3>
             <button
               onClick={() => { setEditingCollege(null); setShowCollegeModal(true); }}
-              className="flex items-center gap-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-600/25"
+              className="btn-primary flex items-center gap-1.5 text-xs py-2 px-4"
             >
               <Plus size={13} />
               Add College
             </button>
           </div>
 
+          {/* Search bar inside admin colleges CRUD */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search colleges by name or code..."
+              value={adminSearch}
+              onChange={(e) => {
+                setAdminSearch(e.target.value);
+                setCollegesPage(1);
+              }}
+              className="input-field py-2.5 text-xs"
+            />
+          </div>
+
           {collegesLoading ? (
             <div className="flex justify-center items-center py-20">
-              <div className="w-8 h-8 border-4 border-indigo-600/20 border-t-indigo-500 rounded-full animate-spin" />
+              <div className="w-8 h-8 border-4 border-zinc-800 border-t-emerald-500 rounded-full animate-spin" />
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="glass-card rounded-2xl overflow-hidden border border-gray-900">
+              <div className="card overflow-hidden">
                 <table className="w-full text-left text-xs">
                   <thead>
                     <tr className="bg-slate-900/40 border-b border-gray-900 text-gray-400 uppercase font-bold tracking-wide">

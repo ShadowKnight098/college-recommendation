@@ -20,9 +20,15 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      console.error('CRITICAL SECURITY ALERT: JWT_SECRET environment variable is missing.');
+      return res.status(500).json({ error: 'Internal server configuration error.' });
+    }
+
     const token = jwt.sign(
       { id: admin.id, username: admin.username, role: admin.role },
-      process.env.JWT_SECRET || 'supersecretjwtkeyforcollegepredictor123',
+      secret,
       { expiresIn: '24h' }
     );
 

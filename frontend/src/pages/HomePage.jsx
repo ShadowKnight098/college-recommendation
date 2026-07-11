@@ -6,23 +6,53 @@ function HomePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 space-y-16 md:space-y-24 animate-in">
       {/* Hero */}
-      <section className="text-left space-y-4 max-w-2xl">
-        <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-          Find the right
-          <br />
-          engineering college.
-        </h1>
-        <p className="text-sm md:text-base text-zinc-400 leading-relaxed max-w-lg">
-          Browse 196+ colleges across Andhra Pradesh, ranked by priority. Filter
-          by region, district, and type.
-        </p>
-        <Link
-          to="/colleges"
-          className="btn-primary inline-flex items-center gap-2 mt-4"
-        >
-          View Rankings
-          <ArrowRight size={16} />
-        </Link>
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-8 md:pt-16 pb-12">
+        <div className="space-y-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.05]">
+            Find the right
+            <br />
+            engineering college.
+          </h1>
+          <p className="text-sm md:text-base text-zinc-400 leading-relaxed max-w-lg">
+            Browse 196+ engineering colleges across Andhra Pradesh, ranked by priority. Filter by region, district, and type.
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              to="/colleges"
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              View Rankings
+              <ArrowRight size={16} />
+            </Link>
+            <Link
+              to="/about"
+              className="btn-secondary"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+
+        {/* Right side: Rankings Preview Widget */}
+        <div className="hidden lg:block space-y-3">
+          <div className="text-[11px] font-semibold uppercase tracking-wider text-zinc-600 mb-1">Rankings Preview</div>
+          <div className="space-y-2 max-w-md">
+            {[
+              { id: 1, name: 'ABR College of Engg and Technology', priority: 1, region: 'AU', code: 'ABRK', district: 'KANIGIRI (PKS)' },
+              { id: 2, name: 'Adarsh College of Engineering', priority: 2, region: 'AU', code: 'ACEE', district: 'GOLLAPROLU (EG)' },
+              { id: 3, name: 'Aditya College of Engineering', priority: 3, region: 'SVU', code: 'ACEM', district: 'MADANAPALLE (CTR)' },
+            ].map((col) => (
+              <div key={col.id} className="card p-4 flex items-center gap-4 hover:border-zinc-700 transition-colors">
+                <span className="text-sm font-mono text-emerald-500 font-bold w-6">#{col.priority}</span>
+                <div className="flex-grow min-w-0">
+                  <div className="text-xs font-semibold text-white truncate">{col.name}</div>
+                  <div className="text-[10px] text-zinc-500 mt-0.5">{col.district} • Region: {col.region}</div>
+                </div>
+                <span className="text-[10px] text-zinc-600 font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded">{col.code}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Stats */}

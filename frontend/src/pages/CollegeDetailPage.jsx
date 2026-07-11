@@ -30,6 +30,7 @@ const generateSeats = (code) => {
 export default function CollegeDetailPage() {
   const { id } = useParams();
   const [college, setCollege] = useState(null);
+  const [branches, setBranches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -40,6 +41,7 @@ export default function CollegeDetailPage() {
         setError(null);
         const data = await api.colleges.getById(id);
         setCollege(data.college);
+        setBranches(data.branches || []);
       } catch (err) {
         setError(err.message || 'Failed to load college details');
       } finally {
@@ -74,8 +76,6 @@ export default function CollegeDetailPage() {
       </div>
     );
   }
-
-  const seats = generateSeats(college.code || 'DEFAULT');
 
   /* ---------- Loaded state ---------- */
   return (
@@ -195,45 +195,61 @@ export default function CollegeDetailPage() {
       {/* Seats table */}
       <div className="mt-8 animate-in delay-5">
         <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">
-          Seat Intake (Estimated)
+          Seat Intake & Course Fees
         </h2>
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[500px] sm:min-w-0">
+            <table className="w-full min-w-[650px] text-left">
               <thead className="bg-zinc-800/30">
                 <tr>
-                  <th className="px-4 py-3 text-left text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
-                    Branch
+                  <th className="px-4 py-3 text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
+                    Branch Name
                   </th>
-                  <th className="px-4 py-3 text-left text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
-                    Intake
+                  <th className="px-4 py-3 text-center text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
+                    Total Seats
                   </th>
-                  <th className="px-4 py-3 text-left text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
+                  <th className="px-4 py-3 text-center text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
+                    Leftover Seats
+                  </th>
+                  <th className="px-4 py-3 text-right text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
+                    Annual Fee
+                  </th>
+                  <th className="px-4 py-3 text-center text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
                     Status
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {seats.map((seat) => (
-                  <tr
-                    key={seat.branch}
-                    className="border-b border-zinc-800/30 last:border-0 hover:bg-zinc-800/20 transition-colors"
-                  >
-                    <td className="px-4 py-3 text-sm text-zinc-300">{seat.branch}</td>
-                    <td className="px-4 py-3 text-sm text-white font-medium">{seat.intake}</td>
-                    <td className="px-4 py-3 text-sm">
-                      <span
-                        className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${
-                          seat.status === 'Available'
-                            ? 'bg-emerald-500/10 text-emerald-500'
-                            : 'bg-yellow-500/10 text-yellow-500'
-                        }`}
-                      >
-                        {seat.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                {branches.map((b) => {
+                  const hasSeats = b.leftover_seats > 0;
+                  return (
+                    <tr
+                      key={b.id || b.branch_code}
+                      className="border-b border-zinc-800/30 last:border-0 hover:bg-zinc-800/20 transition-colors"
+                    >
+                      <td className="px-4 py-3 text-sm">
+                        <div className="text-zinc-200 font-medium">{b.branch_name}</div>
+                        <div className="text-[10px] text-zinc-500 font-mono mt-0.5">{b.branch_code}</div>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-zinc-400 text-center font-mono">{b.total_seats}</td>
+                      <td className="px-4 py-3 text-sm text-white text-center font-mono font-medium">{b.leftover_seats}</td>
+                      <td className="px-4 py-3 text-sm text-zinc-300 text-right font-mono">
+                        ₹{b.fee}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-center">
+                        <span
+                          className={`inline-flex px-2 py-0.5 rounded text-[11px] font-mono ${
+                            hasSeats
+                              ? 'bg-emerald-500/10 text-emerald-500'
+                              : 'bg-red-500/10 text-red-400'
+                          }`}
+                        >
+                          {hasSeats ? 'Available' : 'Filled'}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
