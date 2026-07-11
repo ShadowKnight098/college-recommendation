@@ -211,43 +211,43 @@ export default function AdminDashboard() {
   // ────────────────────────────────────────────────────────
   if (!token) {
     return (
-      <div className="py-24 px-6 max-w-md mx-auto animate-fade-in">
-        <div className="glass-card rounded-3xl p-8 space-y-6">
+      <div className="py-20 px-6 max-w-sm mx-auto animate-in">
+        <div className="card p-6 space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-2">
-              <KeyRound size={22} />
+            <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 text-zinc-350 flex items-center justify-center mx-auto mb-2">
+              <KeyRound size={18} />
             </div>
-            <h1 className="text-2xl font-extrabold text-white heading">Admin Area Login</h1>
-            <p className="text-xs text-gray-500">Access college management controls and statistics.</p>
+            <h1 className="text-lg font-semibold text-white">Admin Login</h1>
+            <p className="text-xs text-zinc-500">Access college management controls and statistics.</p>
           </div>
 
           {loginError && (
-            <div className="p-3 text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl">
+            <div className="p-3 text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl">
               {loginError}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-400">Admin Username</label>
+              <label className="text-[13px] text-zinc-500">Admin Username</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username (default: admin)"
-                className="px-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                placeholder="Enter admin username"
+                className="input-field"
                 required
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-400">Admin Password</label>
+              <label className="text-[13px] text-zinc-500">Admin Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password (default: admin123)"
-                className="px-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                placeholder="Enter password"
+                className="input-field"
                 required
               />
             </div>
@@ -255,9 +255,9 @@ export default function AdminDashboard() {
             <button
               type="submit"
               disabled={loginLoading}
-              className="w-full py-3 mt-2 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition disabled:opacity-50"
+              className="btn-primary w-full mt-2"
             >
-              {loginLoading ? 'Authenticating credentials...' : 'Authenticate Login'}
+              {loginLoading ? 'Authenticating...' : 'Sign In to Dashboard'}
             </button>
           </form>
         </div>

@@ -1,59 +1,71 @@
 import React from 'react';
-import { Info, Code2, Database, Shield, BookOpen, UserCheck } from 'lucide-react';
+import { Code2, Database, Shield, Globe } from 'lucide-react';
 
-export default function AboutPage() {
-  const specs = [
-    { icon: Code2, title: 'Modular Architecture', desc: 'Constructed using an MVC architecture separating route definitions, database models, and view presentation controllers.' },
-    { icon: Database, title: 'Relational Database', desc: 'Powered by PostgreSQL leveraging compound indexes on district, regions, and priority columns for sub-millisecond retrieval speeds.' },
-    { icon: Shield, title: 'Role-Based Access', desc: 'Secure administrator logins protected with JSON Web Tokens (JWT) and encrypted passwords via bcrypt encryption.' },
-    { icon: BookOpen, title: 'Admissions Shortlisting', desc: 'Engineered specifically for prospective students to simplify tracking historic counselling cutoffs.' }
-  ];
+const techStack = [
+  { icon: Code2, title: 'React + Express', desc: 'Modern full-stack architecture' },
+  { icon: Database, title: 'PostgreSQL', desc: 'Cloud-hosted on Neon' },
+  { icon: Shield, title: 'JWT Auth', desc: 'Secure admin access' },
+  { icon: Globe, title: 'Open Access', desc: 'Free, no registration' },
+];
 
+const AboutPage = () => {
   return (
-    <div className="py-16 px-6 max-w-4xl mx-auto space-y-16 animate-fade-in">
-      {/* Hero Header */}
-      <div className="text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-4">
-          <Info size={30} />
-        </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white heading">About The Portal</h1>
-        <p className="text-sm text-gray-450 leading-relaxed max-w-xl mx-auto">
-          Simplifying the transition from entrance examinations to collegiate life by indexing priority lists and automating admissions forecasting.
-        </p>
-      </div>
+    <div style={{ maxWidth: '48rem', margin: '0 auto', padding: '4rem 1.5rem' }}>
+      <h1 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#ffffff' }}>About</h1>
+      <p style={{ fontSize: '0.875rem', color: '#71717a', marginTop: '0.5rem' }}>
+        RankEdge is a college ranking portal for engineering students in Andhra Pradesh.
+      </p>
 
-      {/* Tech Specifications Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-        {specs.map((spec, i) => {
-          const Icon = spec.icon;
-          return (
-            <div key={i} className="glass-card rounded-2xl p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400">
-                <Icon size={20} />
-              </div>
-              <h3 className="font-bold text-white text-base">{spec.title}</h3>
-              <p className="text-xs text-gray-450 leading-relaxed">{spec.desc}</p>
+      <div style={{ borderTop: '1px solid #18181b', margin: '2rem 0' }} />
+
+      <p style={{ fontSize: '0.875rem', color: '#a1a1aa', lineHeight: 1.7 }}>
+        State engineering counselling processes are complex, with thousands of seats across hundreds of colleges.
+        RankEdge simplifies this by providing a centralized dashboard where colleges are ranked by priority,
+        filterable by region, district, and type — saving students hours of research.
+      </p>
+
+      <div style={{ borderTop: '1px solid #18181b', margin: '2rem 0' }} />
+
+      <p style={{
+        fontSize: '0.75rem',
+        fontWeight: 500,
+        color: '#71717a',
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
+        marginBottom: '1rem',
+      }}>
+        Built with
+      </p>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(1, 1fr)',
+        gap: '0.75rem',
+      }} className="about-grid">
+        {techStack.map(({ icon: Icon, title, desc }) => (
+          <div key={title} className="card" style={{ padding: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+            <Icon size={16} style={{ color: '#71717a', marginTop: '2px', flexShrink: 0 }} />
+            <div>
+              <p style={{ fontSize: '0.875rem', fontWeight: 500, color: '#d4d4d8' }}>{title}</p>
+              <p style={{ fontSize: '13px', color: '#52525b', marginTop: '2px' }}>{desc}</p>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
-      {/* Purpose Banner */}
-      <div className="glass-card rounded-3xl p-8 md:p-10 border border-indigo-500/10 bg-indigo-950/5 flex flex-col md:flex-row gap-6 items-center">
-        <div className="space-y-4 flex-grow">
-          <h3 className="text-xl font-bold text-indigo-400">Our Purpose</h3>
-          <p className="text-xs text-gray-450 leading-relaxed">
-            State engineering counselling processes are notoriously complex, with thousands of seats scattered across diverse colleges. This website acts as a centralized dashboard to list official college accreditations, governance standings, and run comparative simulations that filter out unreachable codes, saving students hours of research.
-          </p>
-        </div>
-        <div className="flex-shrink-0 flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#0a0d18] border border-gray-800">
-          <UserCheck className="text-indigo-400" size={24} />
-          <div>
-            <div className="text-xs font-bold text-white">Student First</div>
-            <div className="text-[10px] text-gray-500">100% Free & Open Access</div>
-          </div>
-        </div>
-      </div>
+      <p style={{ fontSize: '0.75rem', color: '#3f3f46', textAlign: 'center', marginTop: '3rem' }}>
+        Built for students in Andhra Pradesh.
+      </p>
+
+      <style>{`
+        @media (min-width: 768px) {
+          .about-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default AboutPage;

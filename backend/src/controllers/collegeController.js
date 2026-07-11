@@ -76,11 +76,7 @@ exports.getCollegeById = async (req, res) => {
       return res.status(404).json({ error: 'College not found' });
     }
 
-    const cutoffsRes = await db.query('SELECT * FROM college_cutoffs WHERE college_id = $1 ORDER BY branch, category', [id]);
-    res.json({
-      college: collegeRes.rows[0],
-      cutoffs: cutoffsRes.rows
-    });
+    res.json({ college: collegeRes.rows[0] });
   } catch (error) {
     console.error('Fetch college detail error:', error);
     res.status(500).json({ error: 'Internal server error' });

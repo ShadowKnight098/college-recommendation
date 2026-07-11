@@ -1,156 +1,152 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
-import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle } from 'lucide-react';
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+const ContactPage = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       setError('All fields are required.');
       return;
     }
 
-    setSubmitting(true);
-    setError('');
-    
     try {
+      setSubmitting(true);
       await api.feedback.submit(formData);
       setSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      setError(err.message || 'Failed to submit feedback. Try again.');
+      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="py-16 px-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 items-start animate-fade-in">
-      {/* Contact Info Sidebar */}
-      <div className="md:col-span-2 space-y-6">
-        <div className="space-y-3">
-          <h1 className="text-3xl font-extrabold text-white heading">Get in Touch</h1>
-          <p className="text-xs text-gray-450 leading-relaxed">
-            Have questions about predictions? Or want to list your college details on our portal? Drop us a feedback message.
+    <div style={{ maxWidth: '32rem', margin: '0 auto', padding: '4rem 1.5rem' }}>
+      <h1 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#ffffff' }}>Contact</h1>
+      <p style={{ fontSize: '0.875rem', color: '#71717a', marginTop: '0.5rem' }}>
+        Have questions or want to list your college? Send us a message.
+      </p>
+
+      <div style={{ borderTop: '1px solid #18181b', margin: '2rem 0' }} />
+
+      {success ? (
+        <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+          <CheckCircle size={32} style={{ color: '#10b981', margin: '0 auto' }} />
+          <p style={{ fontSize: '0.875rem', fontWeight: 500, color: '#ffffff', marginTop: '1rem' }}>
+            Message sent.
           </p>
+          <p style={{ fontSize: '13px', color: '#71717a', marginTop: '0.25rem' }}>
+            We'll get back to you soon.
+          </p>
+          <button
+            className="btn-secondary"
+            style={{ marginTop: '1.5rem' }}
+            onClick={() => setSuccess(false)}
+          >
+            Send another
+          </button>
         </div>
-
-        <div className="space-y-4 pt-4">
-          <div className="flex items-center gap-3 text-xs text-gray-300">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center flex-shrink-0">
-              <Mail size={14} />
+      ) : (
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {error && (
+            <div style={{
+              fontSize: '0.875rem',
+              color: '#f87171',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              border: '1px solid rgba(239, 68, 68, 0.2)',
+              borderRadius: '0.5rem',
+              padding: '0.75rem',
+            }}>
+              {error}
             </div>
-            <span>support@collegepredictor.edu</span>
+          )}
+
+          <div>
+            <label style={{ fontSize: '13px', color: '#71717a', marginBottom: '0.375rem', display: 'block' }}>
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="input-field"
+            />
           </div>
-          <div className="flex items-center gap-3 text-xs text-gray-300">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center flex-shrink-0">
-              <MessageSquare size={14} />
-            </div>
-            <span>Immediate Response within 24h</span>
+
+          <div>
+            <label style={{ fontSize: '13px', color: '#71717a', marginBottom: '0.375rem', display: 'block' }}>
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="input-field"
+            />
           </div>
-        </div>
-      </div>
 
-      {/* Feedback Form Card */}
-      <div className="md:col-span-3 glass-card rounded-2xl p-6 md:p-8 space-y-6">
-        {success ? (
-          <div className="py-8 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-              <CheckCircle size={24} />
-            </div>
-            <h3 className="font-bold text-white text-base">Message Submitted!</h3>
-            <p className="text-xs text-gray-450 max-w-xs mx-auto leading-relaxed">
-              Thank you for your feedback. Our administrative team will check the details and reply shortly.
-            </p>
-            <button
-              onClick={() => setSuccess(false)}
-              className="px-6 py-2 border border-gray-850 hover:bg-slate-900 text-gray-350 text-xs rounded-xl font-medium transition"
-            >
-              Send Another Message
-            </button>
+          <div>
+            <label style={{ fontSize: '13px', color: '#71717a', marginBottom: '0.375rem', display: 'block' }}>
+              Subject
+            </label>
+            <input
+              type="text"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              className="input-field"
+            />
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="p-3 text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl">
-                {error}
-              </div>
-            )}
 
-            {/* Name */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-450">Full Name</label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="e.g. John Doe"
-                className="px-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition"
-                required
-              />
-            </div>
+          <div>
+            <label style={{ fontSize: '13px', color: '#71717a', marginBottom: '0.375rem', display: 'block' }}>
+              Message
+            </label>
+            <textarea
+              name="message"
+              rows={4}
+              value={formData.message}
+              onChange={handleChange}
+              className="input-field"
+              style={{ resize: 'none' }}
+            />
+          </div>
 
-            {/* Email */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-450">Email Address</label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="e.g. john@example.com"
-                className="px-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition"
-                required
-              />
-            </div>
-
-            {/* Subject */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-450">Subject</label>
-              <input
-                type="text"
-                value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                placeholder="e.g. Help with cutoff rank prediction"
-                className="px-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition"
-                required
-              />
-            </div>
-
-            {/* Message */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-455">Message</label>
-              <textarea
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="Type your feedback message here..."
-                rows={5}
-                className="px-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 transition resize-none font-sans"
-                required
-              />
-            </div>
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full py-3.5 mt-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-xs transition shadow-lg shadow-indigo-600/25 disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              <Send size={13} />
-              {submitting ? 'Submitting feedback...' : 'Send Message'}
-            </button>
-          </form>
-        )}
-      </div>
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={submitting}
+            style={{
+              width: '100%',
+              marginTop: '0.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            <Send size={16} />
+            {submitting ? 'Sending...' : 'Send Message'}
+          </button>
+        </form>
+      )}
     </div>
   );
-}
+};
+
+export default ContactPage;

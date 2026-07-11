@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../services/api';
-import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
+import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid } from 'lucide-react';
+
+const CAMPUS_IMAGES = [
+  'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=400&h=300&fit=crop',
+];
+const getCollegeImage = (id) => CAMPUS_IMAGES[id % CAMPUS_IMAGES.length];
 
 export default function CollegeListPage() {
   const [colleges, setColleges] = useState([]);
@@ -8,32 +21,24 @@ export default function CollegeListPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
-  
-  // Search & Filter States
   const [search, setSearch] = useState('');
   const [district, setDistrict] = useState('');
   const [region, setRegion] = useState('');
   const [type, setType] = useState('');
   const [autonomous, setAutonomous] = useState('');
-  
-  // Sorting States
   const [sortBy, setSortBy] = useState('priority');
   const [order, setOrder] = useState('ASC');
-
-  // Dynamic filter options from DB
   const [filterOptions, setFilterOptions] = useState({ regions: [], districts: [], types: [] });
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [viewMode, setViewMode] = useState('list');
 
-  // Load Filters from Database
   useEffect(() => {
     const loadFilters = async () => {
       try {
         const data = await api.colleges.getFilters();
         setFilterOptions(data);
-      } catch (err) {
-        console.error('Error fetching filters options:', err);
-      }
+      } catch (err) { console.error('Error fetching filters:', err); }
     };
     loadFilters();
   }, []);
@@ -42,49 +47,28 @@ export default function CollegeListPage() {
     setLoading(true);
     try {
       const data = await api.colleges.getAll({
-        search,
-        district,
-        region,
-        type,
-        autonomous,
-        sortBy,
-        order,
-        page,
-        limit: 8
+        search, district, region, type, autonomous, sortBy, order, page, limit: 12
       });
       setColleges(data.colleges);
       setTotalCount(data.pagination.total);
       setTotalPages(data.pagination.totalPages);
-    } catch (error) {
-      console.error('Error fetching colleges:', error);
-    } finally {
-      setLoading(false);
-    }
+    } catch (error) { console.error('Error fetching colleges:', error); }
+    finally { setLoading(false); }
   };
 
-  useEffect(() => {
-    fetchColleges();
-  }, [page, district, region, type, autonomous, sortBy, order]);
+  useEffect(() => { fetchColleges(); }, [page, district, region, type, autonomous, sortBy, order]);
 
-  // Live suggestions query
   useEffect(() => {
-    if (search.trim().length < 2) {
-      setSuggestions([]);
-      return;
-    }
-    const delayDebounce = setTimeout(async () => {
+    if (search.trim().length < 2) { setSuggestions([]); return; }
+    const delay = setTimeout(async () => {
       try {
         const data = await api.colleges.getAll({ search, limit: 5 });
         setSuggestions(data.colleges);
-      } catch (err) {
-        console.error('Error loading suggestions:', err);
-      }
+      } catch (err) { console.error('Suggestions error:', err); }
     }, 250);
-
-    return () => clearTimeout(delayDebounce);
+    return () => clearTimeout(delay);
   }, [search]);
 
-  // Handle Search submit
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setPage(1);
@@ -93,280 +77,337 @@ export default function CollegeListPage() {
   };
 
   const toggleSort = (field) => {
-    if (sortBy === field) {
-      setOrder(order === 'ASC' ? 'DESC' : 'ASC');
-    } else {
-      setSortBy(field);
-      setOrder('ASC');
-    }
+    if (sortBy === field) { setOrder(order === 'ASC' ? 'DESC' : 'ASC'); }
+    else { setSortBy(field); setOrder('ASC'); }
     setPage(1);
   };
 
   const handleClearFilters = () => {
-    setSearch('');
-    setDistrict('');
-    setRegion('');
-    setType('');
-    setAutonomous('');
-    setSortBy('priority');
-    setOrder('ASC');
-    setPage(1);
+    setSearch(''); setDistrict(''); setRegion(''); setType(''); setAutonomous('');
+    setSortBy('priority'); setOrder('ASC'); setPage(1);
+  };
+
+  const hasActiveFilters = district || region || type || autonomous;
+
+  const getPageNumbers = () => {
+    const pages = [];
+    let start = Math.max(1, page - 2);
+    let end = Math.min(totalPages, start + 4);
+    if (end - start < 4) start = Math.max(1, end - 4);
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
   };
 
   return (
-    <div className="py-12 px-6 max-w-7xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto px-6 py-8">
+
       {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-extrabold text-white heading">College Rankings</h1>
-        <p className="text-sm text-gray-450">Browse and filter top rated educational institutions by rankings, regions, and districts.</p>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-xl font-semibold text-white">Rankings</h1>
+        <span className="text-sm text-zinc-600">{totalCount} colleges</span>
       </div>
 
-      {/* Filter panel */}
-      <div className="glass-card rounded-2xl p-6 grid grid-cols-1 gap-6">
-        <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-grow relative">
-            <Search className="absolute left-4 top-3.5 text-gray-500" size={18} />
-            <input
-              type="text"
-              placeholder="Search by college name or code..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setShowSuggestions(true);
-              }}
-              onFocus={() => setShowSuggestions(true)}
-              className="w-full pl-11 pr-4 py-3 bg-[#0d1222] border border-gray-800 rounded-xl text-sm text-white focus:outline-none focus:border-indigo-500 transition"
-            />
-            {/* Live Suggestion dropdown */}
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute left-0 right-0 mt-2 bg-[#0f1528] border border-gray-850 rounded-xl overflow-hidden shadow-2xl z-50">
-                {suggestions.map((col) => (
-                  <div
-                    key={col.id}
-                    onClick={() => {
-                      setSearch(col.name);
-                      setSuggestions([]);
-                      setShowSuggestions(false);
-                      setPage(1);
-                      // Apply search immediately
-                      setTimeout(() => {
-                        fetchColleges();
-                      }, 50);
-                    }}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-indigo-600/10 cursor-pointer border-b border-gray-900 last:border-0 group transition"
-                  >
-                    {/* logo photo */}
-                    <div className="w-8 h-8 rounded-lg overflow-hidden bg-slate-900 border border-gray-850 flex-shrink-0 flex items-center justify-center">
-                      <img
-                        src={col.logo_url}
-                        alt=""
-                        className="w-full h-full object-cover"
-                        onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=128'; }}
-                      />
-                    </div>
-                    {/* Name */}
-                    <span className="text-xs text-gray-250 font-medium group-hover:text-white flex-grow truncate">{col.name}</span>
-                    {/* Code at the end */}
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500/20 font-bold font-mono">
-                      {col.code}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-            {/* Backdrop click closer */}
-            {showSuggestions && (
-              <div 
-                className="fixed inset-0 z-40 bg-transparent" 
-                onClick={() => setTimeout(() => setShowSuggestions(false), 200)} 
-              />
-            )}
-          </div>
-          <button
-            type="submit"
-            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition"
-          >
-            Search
-          </button>
+      {/* Search */}
+      <div className="relative">
+        <form onSubmit={handleSearchSubmit}>
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600" size={16} />
+          <input
+            type="text"
+            className="input-field pl-9 pr-4 h-11 text-sm w-full"
+            placeholder="Search by name or code..."
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setShowSuggestions(true); }}
+            onFocus={() => setShowSuggestions(true)}
+          />
         </form>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {/* Region */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-400">Region</label>
-            <select
-              value={region}
-              onChange={(e) => { setRegion(e.target.value); setPage(1); }}
-              className="px-3 py-2.5 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
-            >
-              <option value="">All Regions</option>
-              {filterOptions.regions.map(r => <option key={r} value={r}>{r}</option>)}
-            </select>
-          </div>
+        {showSuggestions && suggestions.length > 0 && (
+          <>
+            <div
+              className="fixed inset-0 z-40"
+              onClick={() => setShowSuggestions(false)}
+            />
+            <div className="absolute w-full mt-1 bg-[#18181b] border border-zinc-800 rounded-xl overflow-hidden z-50 shadow-xl">
+              {suggestions.map((s) => (
+                <div
+                  key={s.id || s.code}
+                  className="flex items-center gap-3 px-3 py-2.5 hover:bg-zinc-800/50 cursor-pointer border-b border-zinc-800/50 last:border-0"
+                  onClick={() => {
+                    setSearch(s.name);
+                    setSuggestions([]);
+                    setShowSuggestions(false);
+                    setTimeout(() => fetchColleges(), 50);
+                  }}
+                >
+                  <div className="w-7 h-7 rounded-md bg-zinc-800 flex items-center justify-center text-zinc-400 text-[10px] font-bold uppercase">
+                    {s.code?.slice(0, 2)}
+                  </div>
+                  <span className="text-sm text-zinc-300 flex-grow truncate">{s.name}</span>
+                  <span className="text-[11px] text-zinc-600 font-mono">{s.code}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
 
-          {/* District */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-400">District / Town</label>
-            <select
-              value={district}
-              onChange={(e) => { setDistrict(e.target.value); setPage(1); }}
-              className="px-3 py-2.5 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
-            >
-              <option value="">All Districts</option>
-              {filterOptions.districts.map(d => <option key={d} value={d}>{d}</option>)}
-            </select>
-          </div>
-
-          {/* Type */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-400">Type</label>
-            <select
-              value={type}
-              onChange={(e) => { setType(e.target.value); setPage(1); }}
-              className="px-3 py-2.5 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
-            >
-              <option value="">All Types</option>
-              {filterOptions.types.map(t => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
-
-          {/* Autonomous */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-400">Governance</label>
-            <select
-              value={autonomous}
-              onChange={(e) => { setAutonomous(e.target.value); setPage(1); }}
-              className="px-3 py-2.5 bg-[#0d1222] border border-gray-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
-            >
-              <option value="">All Governance</option>
-              <option value="true">Autonomous</option>
-              <option value="false">University Affiliated</option>
-            </select>
-          </div>
-
-          {/* Reset button */}
-          <button
-            onClick={handleClearFilters}
-            className="mt-auto px-4 py-2.5 border border-gray-800 hover:bg-slate-900 text-gray-300 rounded-xl text-xs font-medium transition"
+      {/* Filters + View Toggle */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-4">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 flex-grow">
+          <select
+            value={region}
+            onChange={(e) => { setRegion(e.target.value); setPage(1); }}
+            className="bg-[#18181b] border border-zinc-800 rounded-lg text-[13px] text-zinc-400 px-3 py-2 outline-none focus:border-emerald-500/50 w-full sm:w-auto"
           >
-            Clear Filters
+            <option value="">All Regions</option>
+            {filterOptions.regions.map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+
+          <select
+            value={district}
+            onChange={(e) => { setDistrict(e.target.value); setPage(1); }}
+            className="bg-[#18181b] border border-zinc-800 rounded-lg text-[13px] text-zinc-400 px-3 py-2 outline-none focus:border-emerald-500/50 w-full sm:w-auto"
+          >
+            <option value="">All Districts</option>
+            {filterOptions.districts.map((d) => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
+
+          <select
+            value={type}
+            onChange={(e) => { setType(e.target.value); setPage(1); }}
+            className="bg-[#18181b] border border-zinc-800 rounded-lg text-[13px] text-zinc-400 px-3 py-2 outline-none focus:border-emerald-500/50 w-full sm:w-auto"
+          >
+            <option value="">All Types</option>
+            {filterOptions.types.map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
+
+          <select
+            value={autonomous}
+            onChange={(e) => { setAutonomous(e.target.value); setPage(1); }}
+            className="bg-[#18181b] border border-zinc-800 rounded-lg text-[13px] text-zinc-400 px-3 py-2 outline-none focus:border-emerald-500/50 w-full sm:w-auto"
+          >
+            <option value="">Governance</option>
+            <option value="yes">Autonomous</option>
+            <option value="no">University Affiliated</option>
+          </select>
+        </div>
+
+        <div className="flex items-center justify-between md:justify-end gap-3 flex-shrink-0">
+          {hasActiveFilters && (
+            <button
+              onClick={handleClearFilters}
+              className="text-[13px] text-zinc-650 hover:text-white cursor-pointer transition-colors"
+            >
+              Clear Filters
+            </button>
+          )}
+
+          {/* View Toggle */}
+          <div className="bg-zinc-900 rounded-lg p-0.5 inline-flex gap-0.5">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`p-1.5 rounded-md transition-colors ${
+                viewMode === 'list' ? 'bg-zinc-800 text-white' : 'text-zinc-600 hover:text-zinc-400'
+              }`}
+            >
+              <LayoutList size={16} />
+            </button>
+            <button
+              onClick={() => setViewMode('card')}
+              className={`p-1.5 rounded-md transition-colors ${
+                viewMode === 'card' ? 'bg-zinc-800 text-white' : 'text-zinc-600 hover:text-zinc-400'
+              }`}
+            >
+              <LayoutGrid size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Sort Row */}
+      <div className="flex items-center justify-between mt-6 mb-3">
+        <span className="text-[13px] text-zinc-600">
+          Showing {colleges.length} of {totalCount}
+        </span>
+        <div className="flex gap-1">
+          <button
+            onClick={() => toggleSort('priority')}
+            className={`text-[13px] px-2.5 py-1 rounded-md flex items-center gap-1 transition-colors ${
+              sortBy === 'priority' ? 'text-white bg-zinc-800' : 'text-zinc-500 hover:text-zinc-300'
+            }`}
+          >
+            Priority <ArrowUpDown size={12} />
+          </button>
+          <button
+            onClick={() => toggleSort('name')}
+            className={`text-[13px] px-2.5 py-1 rounded-md flex items-center gap-1 transition-colors ${
+              sortBy === 'name' ? 'text-white bg-zinc-800' : 'text-zinc-500 hover:text-zinc-300'
+            }`}
+          >
+            Name <ArrowUpDown size={12} />
           </button>
         </div>
       </div>
 
-      {/* College Table / Cards */}
+      {/* Content */}
       {loading ? (
-        <div className="flex justify-center items-center py-24">
-          <div className="w-10 h-10 border-4 border-indigo-600/20 border-t-indigo-500 rounded-full animate-spin" />
-        </div>
-      ) : colleges.length === 0 ? (
-        <div className="glass-card rounded-2xl py-20 text-center text-gray-500 space-y-2">
-          <School size={44} className="mx-auto text-gray-600 mb-2 animate-bounce" />
-          <h3 className="font-bold text-gray-300">No Colleges Found</h3>
-          <p className="text-xs max-w-sm mx-auto">Try refining your search text or removing active filter dropdown selection.</p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center text-xs text-gray-450">
-            <span>Showing {colleges.length} of {totalCount} matching colleges</span>
-            <div className="flex items-center gap-4">
-              <button 
-                onClick={() => toggleSort('priority')} 
-                className={`flex items-center gap-1 hover:text-white transition ${sortBy === 'priority' ? 'text-indigo-400 font-bold' : ''}`}
-              >
-                Priority Rank
-                <ArrowUpDown size={12} />
-              </button>
-              <button 
-                onClick={() => toggleSort('name')} 
-                className={`flex items-center gap-1 hover:text-white transition ${sortBy === 'name' ? 'text-indigo-400 font-bold' : ''}`}
-              >
-                Alphabetical
-                <ArrowUpDown size={12} />
-              </button>
-            </div>
-          </div>
-
-          {/* College grid list */}
-          <div className="grid grid-cols-1 gap-6">
-            {colleges.map((college) => (
-              <div 
-                key={college.id} 
-                className="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center gap-6 hover:border-indigo-500/35 transition duration-300"
-              >
-                {/* Logo */}
-                <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-900 border border-gray-800 flex-shrink-0 flex items-center justify-center">
-                  <img
-                    src={college.logo_url}
-                    alt={college.code}
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=128'; }}
-                  />
-                </div>
-
-                {/* Core detail */}
+        viewMode === 'list' ? (
+          <div className="space-y-1">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="flex items-center gap-4 px-4 py-3" style={{ animationDelay: `${i * 0.05}s` }}>
+                <div className="w-8 h-4 skeleton" />
+                <div className="w-10 h-10 rounded-lg skeleton" />
                 <div className="flex-grow space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-semibold">
-                      Rank #{college.priority}
-                    </span>
-                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-gray-500/10 border border-gray-500/20 text-gray-300">
-                      Code: {college.code}
-                    </span>
-                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300">
-                      Region: {college.region}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-bold text-white leading-snug">{college.name}</h3>
-                  <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-gray-400">
-                    <span className="flex items-center gap-1"><MapPin size={13} /> {college.district}</span>
-                    <span className="flex items-center gap-1"><Building2 size={13} /> {college.type}</span>
-                    <span>{college.autonomous ? 'Autonomous' : 'University Affiliated'}</span>
-                  </div>
-                </div>
-
-                {/* Accreditation specs & Actions */}
-                <div className="flex flex-row md:flex-col items-center md:items-end gap-3 w-full md:w-auto border-t border-gray-900 md:border-t-0 pt-4 md:pt-0">
-                  <div className="flex items-center gap-2 text-xs">
-                    <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">NAAC: {college.naac_grade || 'N/A'}</span>
-                    <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">NBA: {college.nba_status === 'Accredited' ? 'Accredited' : 'Not Accredited'}</span>
-                  </div>
-                  {college.website && (
-                    <a
-                      href={college.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-auto md:ml-0 flex items-center gap-1 text-xs text-indigo-400 hover:text-white transition"
-                    >
-                      <Globe size={13} />
-                      Visit Site
-                    </a>
-                  )}
+                  <div className="h-4 skeleton" style={{ width: `${60 + Math.random() * 30}%` }} />
+                  <div className="h-3 skeleton w-1/3" />
                 </div>
               </div>
             ))}
           </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="card overflow-hidden animate-in" style={{ animationDelay: `${i * 0.05}s` }}>
+                <div className="h-32 skeleton" />
+                <div className="p-4 space-y-3">
+                  <div className="h-4 skeleton w-3/4" />
+                  <div className="h-3 skeleton w-1/2" />
+                  <div className="h-3 skeleton w-1/3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      ) : colleges.length === 0 ? (
+        <div className="py-20 text-center">
+          <School size={32} className="text-zinc-800 mx-auto" />
+          <p className="text-sm font-medium text-zinc-500 mt-3">No colleges found</p>
+          <p className="text-[13px] text-zinc-700 mt-1">Try adjusting your search or filters.</p>
+        </div>
+      ) : viewMode === 'list' ? (
+        /* LIST VIEW */
+        <div className="space-y-1">
+          {colleges.map((college, index) => (
+            <Link
+              to={`/colleges/${college.id}`}
+              key={college.id}
+              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-zinc-900/50 transition-colors group animate-in"
+              style={{ animationDelay: `${index * 0.03}s` }}
+            >
+              {/* Rank */}
+              <span className="text-sm font-mono text-zinc-600 w-8 text-right flex-shrink-0">{college.priority}</span>
+              
+              {/* Image thumbnail */}
+              <div className="w-10 h-10 rounded-lg overflow-hidden bg-zinc-900 flex-shrink-0">
+                <img src={getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
+              </div>
+              
+              {/* Info */}
+              <div className="flex-grow min-w-0">
+                <div className="text-sm font-medium text-zinc-200 group-hover:text-white transition-colors truncate">{college.name}</div>
+                <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5 text-[12px] text-zinc-650">
+                  <span className="flex items-center gap-1"><MapPin size={12} className="flex-shrink-0" /> {college.district}</span>
+                  <span className="flex items-center gap-1"><Building2 size={12} className="flex-shrink-0" /> {college.type}</span>
+                  <span className="sm:hidden text-zinc-500 font-mono">{college.code} • {college.region}</span>
+                </div>
+              </div>
+              
+              {/* Right side */}
+              <div className="hidden sm:flex items-center gap-3 flex-shrink-0">
+                <span className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 font-mono">{college.region}</span>
+                <span className="text-[11px] text-zinc-605 font-mono">{college.code}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        /* CARD VIEW */
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {colleges.map((college, index) => (
+            <Link
+              to={`/colleges/${college.id}`}
+              key={college.id}
+              className="card p-0 overflow-hidden hover:border-zinc-700 transition-colors card-lift animate-in"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              {/* Image */}
+              <div className="h-32 overflow-hidden bg-zinc-900">
+                <img src={getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
+              </div>
+              
+              <div className="p-4">
+                {/* Top row */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-500">#{college.priority}</span>
+                  <span className="text-[11px] font-mono text-zinc-600">{college.code}</span>
+                </div>
+                
+                {/* Name */}
+                <h3 className="text-sm font-semibold text-white mt-2 line-clamp-2">{college.name}</h3>
+                
+                {/* Meta */}
+                <div className="mt-2 space-y-1">
+                  <div className="flex items-center gap-1.5 text-[12px] text-zinc-500">
+                    <MapPin size={12} /> {college.district}
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[12px] text-zinc-500">
+                    <Building2 size={12} /> {college.type}
+                  </div>
+                </div>
+                
+                {/* Bottom */}
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-800/50">
+                  <span className="badge bg-zinc-900 text-zinc-500">{college.region}</span>
+                  <span className="text-[12px] text-emerald-500">View details →</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
 
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-3 pt-6">
-              <button
-                onClick={() => setPage(p => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="w-10 h-10 rounded-xl bg-slate-900 border border-gray-800 flex items-center justify-center text-gray-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <span className="text-sm font-semibold text-gray-400">Page {page} of {totalPages}</span>
-              <button
-                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="w-10 h-10 rounded-xl bg-slate-900 border border-gray-800 flex items-center justify-center text-gray-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
+      {/* Pagination */}
+      {!loading && colleges.length > 0 && totalPages > 1 && (
+        <div className="flex items-center justify-center gap-1.5 mt-8">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 disabled:opacity-30 transition-colors hover:border-zinc-700"
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          {getPageNumbers().map((p) => (
+            <button
+              key={p}
+              onClick={() => setPage(p)}
+              className={`w-8 h-8 rounded-lg text-[13px] font-medium flex items-center justify-center transition-colors ${
+                p === page
+                  ? 'bg-emerald-500 text-black'
+                  : 'text-zinc-500 hover:text-white'
+              }`}
+            >
+              {p}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 disabled:opacity-30 transition-colors hover:border-zinc-700"
+          >
+            <ChevronRight size={16} />
+          </button>
+
+          <span className="text-[12px] text-zinc-700 ml-3">
+            Page {page} of {totalPages}
+          </span>
         </div>
       )}
     </div>
