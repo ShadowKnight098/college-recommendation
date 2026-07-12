@@ -38,6 +38,9 @@ export default function AdminDashboard() {
     logo_url: '', image_url: '', priority: 100
   });
 
+  const [dbDistricts, setDbDistricts] = useState([]);
+  const [customDistrict, setCustomDistrict] = useState(false);
+
   // Feedbacks States
   const [feedbacks, setFeedbacks] = useState([]);
   const [feedbacksLoading, setFeedbacksLoading] = useState(false);
@@ -129,10 +132,23 @@ export default function AdminDashboard() {
     }
   };
 
+  // Fetch unique districts filters from database
+  const fetchFilters = async () => {
+    try {
+      const data = await api.colleges.getFilters();
+      setDbDistricts(data.districts || []);
+    } catch (err) {
+      console.error('Failed to fetch districts filters:', err);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       if (activeTab === 'overview') fetchStats();
-      if (activeTab === 'colleges') fetchColleges();
+      if (activeTab === 'colleges') {
+        fetchColleges();
+        fetchFilters();
+      }
       if (activeTab === 'feedbacks') fetchFeedbacks();
       if (activeTab === 'reviews') fetchPendingReviews();
     }
@@ -203,6 +219,9 @@ export default function AdminDashboard() {
       image_url: college.image_url || '',
       priority: college.priority
     });
+    // Toggle input field style if district is not found in dynamic dropdown options
+    const isCustom = !dbDistricts.includes(college.district);
+    setCustomDistrict(isCustom);
     setShowCollegeModal(true);
   };
 
@@ -482,7 +501,16 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-white text-sm">Colleges Registered ({collegesTotal})</h3>
             <button
-              onClick={() => { setEditingCollege(null); setShowCollegeModal(true); }}
+              onClick={() => {
+                setEditingCollege(null);
+                setCustomDistrict(false);
+                setCollegeForm({
+                  name: '', code: '', district: dbDistricts[0] || 'Chittoor', region: 'SVE', type: 'Engineering',
+                  autonomous: false, naac_grade: 'A', nba_status: 'Not Accredited', website: '',
+                  logo_url: '', image_url: '', priority: 100
+                });
+                setShowCollegeModal(true);
+              }}
               className="btn-primary flex items-center gap-1.5 text-xs py-2 px-4"
             >
               <Plus size={13} />
@@ -645,14 +673,43 @@ export default function AdminDashboard() {
 
                   {/* District */}
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] text-gray-400 uppercase font-semibold">District</label>
-                    <select
-                      value={collegeForm.district}
-                      onChange={(e) => setCollegeForm({ ...collegeForm, district: e.target.value })}
-                      className="px-3 py-2 bg-[#0c0f1d] border border-gray-800 rounded-lg text-xs text-white focus:outline-none"
-                    >
-                      {DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
-                    </select>
+                    <div className="flex justify-between items-center">
+                      <label className="text-[10px] text-gray-400 uppercase font-semibold">District</label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCustomDistrict(!customDistrict);
+                          if (!customDistrict) {
+                            setCollegeForm({ ...collegeForm, district: '' });
+                          } else {
+                            setCollegeForm({ ...collegeForm, district: dbDistricts[0] || 'Chittoor' });
+                          }
+                        }}
+                        className="text-[9px] text-[#f59e0b] hover:underline font-bold"
+                      >
+                        {customDistrict ? 'Select from list' : 'Type Custom'}
+                      </button>
+                    </div>
+                    {customDistrict ? (
+                      <input
+                        type="text"
+                        value={collegeForm.district}
+                        onChange={(e) => setCollegeForm({ ...collegeForm, district: e.target.value })}
+                        placeholder="e.g. VISAKHAPATNAM (VSP)"
+                        className="px-3 py-2 bg-[#0c0f1d] border border-gray-800 rounded-lg text-xs text-white focus:outline-none focus:border-indigo-500"
+                        required
+                      />
+                    ) : (
+                      <select
+                        value={collegeForm.district}
+                        onChange={(e) => setCollegeForm({ ...collegeForm, district: e.target.value })}
+                        className="px-3 py-2 bg-[#0c0f1d] border border-gray-800 rounded-lg text-xs text-white focus:outline-none"
+                      >
+                        {(dbDistricts.length > 0 ? dbDistricts : DISTRICTS).map(d => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    )}
                   </div>
 
                   {/* Type */}
