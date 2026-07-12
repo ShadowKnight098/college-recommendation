@@ -10,7 +10,12 @@ async function request(endpoint, options = {}) {
     ...options.headers
   };
   
-  const token = localStorage.getItem('adminToken');
+  const adminToken = localStorage.getItem('adminToken');
+  const studentToken = localStorage.getItem('studentToken');
+  let token = adminToken;
+  if (endpoint.startsWith('/students') || endpoint.startsWith('/reviews')) {
+    token = studentToken || adminToken;
+  }
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
@@ -98,6 +103,33 @@ export const api = {
     }),
     getAll: () => request('/feedback'),
     delete: (id) => request(`/feedback/${id}`, {
+      method: 'DELETE'
+    })
+  },
+  
+  students: {
+    signup: (data) => request('/students/signup', {
+      method: 'POST',
+      body: data
+    }),
+    login: (data) => request('/students/login', {
+      method: 'POST',
+      body: data
+    }),
+    getMe: () => request('/students/me')
+  },
+
+  reviews: {
+    submit: (data) => request('/reviews', {
+      method: 'POST',
+      body: data
+    }),
+    getByCollege: (collegeId) => request(`/reviews/college/${collegeId}`),
+    getPending: () => request('/reviews/pending'),
+    approve: (id) => request(`/reviews/${id}/approve`, {
+      method: 'PUT'
+    }),
+    reject: (id) => request(`/reviews/${id}`, {
       method: 'DELETE'
     })
   }

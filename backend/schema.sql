@@ -55,7 +55,29 @@ CREATE TABLE admins (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. Page Visits Analytics Table
+-- 4b. Students Table
+CREATE TABLE students (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4c. College Reviews Table
+CREATE TABLE college_reviews (
+  id SERIAL PRIMARY KEY,
+  college_id INTEGER REFERENCES colleges(id) ON DELETE CASCADE,
+  student_id INTEGER REFERENCES students(id) ON DELETE CASCADE,
+  rating INTEGER CHECK (rating >= 1 AND rating <= 5) NOT NULL,
+  comment TEXT NOT NULL,
+  approved BOOLEAN DEFAULT false,
+  post_anonymously BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_student_college_review UNIQUE (college_id, student_id)
+);
+
+-- 5. Page Visits Analytics Table
 CREATE TABLE page_visits (
   id SERIAL PRIMARY KEY,
   visit_date DATE UNIQUE DEFAULT CURRENT_DATE,
@@ -67,6 +89,7 @@ CREATE INDEX IF NOT EXISTS idx_colleges_district ON colleges(district);
 CREATE INDEX IF NOT EXISTS idx_colleges_region ON colleges(region);
 CREATE INDEX IF NOT EXISTS idx_colleges_type ON colleges(type);
 CREATE INDEX IF NOT EXISTS idx_colleges_priority ON colleges(priority ASC);
+CREATE INDEX IF NOT EXISTS idx_reviews_approved_college ON college_reviews(college_id) WHERE approved = true;
 
 -- ────────────────────────────────────────────────────────
 -- SEED DATA

@@ -8,6 +8,8 @@ const db = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const collegeRoutes = require('./routes/collegeRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -46,6 +48,8 @@ app.use(async (req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/colleges', collegeRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Base route info
 app.get('/', (req, res) => {

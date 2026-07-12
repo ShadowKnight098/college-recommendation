@@ -34,22 +34,88 @@ export default function CollegeDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Student reviews states
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [student, setStudent] = useState(() => {
+    const token = localStorage.getItem('studentToken');
+    const name = localStorage.getItem('studentName');
+    return token ? { token, name } : null;
+  });
+
+  // Review submission form states
+  const [rating, setRating] = useState(5);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [postAnonymously, setPostAnonymously] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [submitSuccess, setSubmitSuccess] = useState('');
+
+  // Observe student auth status changes
   useEffect(() => {
-    const fetchCollege = async () => {
+    const handleAuthChange = () => {
+      const token = localStorage.getItem('studentToken');
+      const name = localStorage.getItem('studentName');
+      setStudent(token ? { token, name } : null);
+    };
+    window.addEventListener('student-auth-change', handleAuthChange);
+    return () => window.removeEventListener('student-auth-change', handleAuthChange);
+  }, []);
+
+  // Fetch college details and its approved reviews
+  useEffect(() => {
+    const fetchCollegeAndReviews = async () => {
       try {
         setLoading(true);
         setError(null);
+        
         const data = await api.colleges.getById(id);
         setCollege(data.college);
         setBranches(data.branches || []);
+
+        // Fetch approved reviews
+        const revRes = await api.reviews.getByCollege(id);
+        setReviews(revRes.reviews || []);
       } catch (err) {
         setError(err.message || 'Failed to load college details');
       } finally {
         setLoading(false);
+        setReviewsLoading(false);
       }
     };
-    fetchCollege();
+    fetchCollegeAndReviews();
   }, [id]);
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!comment.trim()) {
+      setSubmitError('Please write your review comment.');
+      return;
+    }
+
+    setSubmitLoading(true);
+    setSubmitError('');
+    setSubmitSuccess('');
+
+    try {
+      const res = await api.reviews.submit({
+        collegeId: college.id,
+        rating,
+        comment: comment.trim(),
+        postAnonymously,
+      });
+
+      setSubmitSuccess(res.message);
+      setComment('');
+      setRating(5);
+      setPostAnonymously(false);
+    } catch (err) {
+      setSubmitError(err.message || 'Failed to submit review.');
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
 
   /* ---------- Loading skeleton ---------- */
   if (loading) {
@@ -182,7 +248,7 @@ export default function CollegeDetailPage() {
                 href={college.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-emerald-500 hover:underline flex items-center gap-1"
+                className="text-sm text-[#f59e0b] hover:underline flex items-center gap-1"
               >
                 {college.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
                 <ExternalLink size={12} />
@@ -256,8 +322,146 @@ export default function CollegeDetailPage() {
         </div>
       </div>
 
+      {/* Student Reviews section */}
+      <div className="mt-12 animate-in delay-6 border-t border-zinc-900 pt-8">
+        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">
+          Student Reviews & Ratings
+        </h2>
+        
+        {/* Reviews List */}
+        {reviewsLoading ? (
+          <div className="space-y-4">
+            <div className="h-20 w-full skeleton rounded-lg" />
+            <div className="h-20 w-full skeleton rounded-lg" />
+          </div>
+        ) : reviews.length === 0 ? (
+          <p className="text-sm text-zinc-500 italic">No approved reviews yet for this college. Be the first to share your experience!</p>
+        ) : (
+          <div className="space-y-4">
+            {reviews.map((r) => (
+              <div key={r.id} className="card p-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-white">{r.studentName}</span>
+                    <span className="text-xs text-zinc-600">•</span>
+                    <span className="text-xs text-zinc-500">
+                      {new Date(r.created_at).toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </span>
+                  </div>
+                  {/* Rating display */}
+                  <div className="flex text-amber-500 text-sm">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span key={i}>{i < r.rating ? '★' : '☆'}</span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-zinc-300 mt-2 whitespace-pre-line leading-relaxed">{r.comment}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Submission Form / Call To Action */}
+        <div className="mt-8 border-t border-zinc-900/60 pt-6">
+          {student ? (
+            <div className="card p-6">
+              <h3 className="text-sm font-bold text-white mb-4">Write a Review</h3>
+
+              {submitError && (
+                <div className="mb-4 p-2 bg-rose-950/40 border border-rose-900/60 rounded text-rose-400 text-xs">
+                  {submitError}
+                </div>
+              )}
+
+              {submitSuccess ? (
+                <div className="p-4 bg-emerald-950/40 border border-emerald-900/60 rounded text-emerald-400 text-xs text-center">
+                  {submitSuccess}
+                </div>
+              ) : (
+                <form onSubmit={handleReviewSubmit} className="space-y-4">
+                  {/* Star selector */}
+                  <div>
+                    <label className="block text-[11px] uppercase tracking-wider text-zinc-500 mb-1.5">Rating</label>
+                    <div className="flex items-center gap-1.5 text-2xl">
+                      {Array.from({ length: 5 }).map((_, i) => {
+                        const starValue = i + 1;
+                        return (
+                          <button
+                            type="button"
+                            key={i}
+                            onClick={() => setRating(starValue)}
+                            onMouseEnter={() => setHoverRating(starValue)}
+                            onMouseLeave={() => setHoverRating(0)}
+                            className="focus:outline-none transition-transform hover:scale-110"
+                          >
+                            <span className={starValue <= (hoverRating || rating) ? 'text-amber-500' : 'text-zinc-700'}>
+                              ★
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Comment */}
+                  <div>
+                    <label className="block text-[11px] uppercase tracking-wider text-zinc-500 mb-1">Your Review</label>
+                    <textarea
+                      required
+                      rows={4}
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Share your experience about academics, placements, infrastructure, and campus life..."
+                      className="w-full bg-[#121214] border border-zinc-800 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#f59e0b] transition-colors resize-none"
+                    />
+                  </div>
+
+                  {/* Anonymous Toggle */}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="anon"
+                      checked={postAnonymously}
+                      onChange={(e) => setPostAnonymously(e.target.checked)}
+                      className="rounded bg-[#121214] border-zinc-800 text-[#f59e0b] focus:ring-[#f59e0b] focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
+                    />
+                    <label htmlFor="anon" className="text-xs text-zinc-400 cursor-pointer select-none">
+                      Post Anonymously (your name will show as "Anonymous Student" publicly)
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitLoading}
+                    className="bg-[#f59e0b] hover:bg-[#d97706] disabled:opacity-50 text-black font-bold text-xs uppercase tracking-wider px-6 py-2 rounded transition-colors"
+                  >
+                    {submitLoading ? 'Submitting...' : 'Submit Review'}
+                  </button>
+                </form>
+              )}
+            </div>
+          ) : (
+            <div className="card p-6 border border-dashed border-zinc-800 text-center">
+              <p className="text-zinc-400 text-sm mb-3">
+                Are you a student of this college? Share your experience to help future aspirants!
+              </p>
+              <button
+                onClick={() => window.dispatchEvent(new Event('open-student-auth'))}
+                className="text-xs bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-4 py-2 rounded transition-colors font-medium"
+              >
+                Log In as Student to Write Review
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Bottom CTA */}
-      <div className="mt-8 pb-8 flex flex-wrap gap-3 animate-in delay-6">
+      <div className="mt-8 pb-8 flex flex-wrap gap-3 animate-in delay-7">
         {college.website && (
           <a
             href={college.website}

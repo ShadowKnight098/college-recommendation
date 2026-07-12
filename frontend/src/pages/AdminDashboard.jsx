@@ -52,6 +52,43 @@ export default function AdminDashboard() {
   const [jsonLoading, setJsonLoading] = useState(false);
   const [jsonStatus, setJsonStatus] = useState(null);
 
+  // Moderate Reviews States
+  const [pendingReviews, setPendingReviews] = useState([]);
+  const [pendingLoading, setPendingLoading] = useState(false);
+
+  const fetchPendingReviews = async () => {
+    setPendingLoading(true);
+    try {
+      const data = await api.reviews.getPending();
+      setPendingReviews(data.reviews || []);
+    } catch (err) {
+      console.error('Failed to fetch pending reviews:', err);
+    } finally {
+      setPendingLoading(false);
+    }
+  };
+
+  const handleApproveReview = async (id) => {
+    try {
+      await api.reviews.approve(id);
+      alert('Review approved successfully!');
+      fetchPendingReviews();
+    } catch (err) {
+      alert(err.message || 'Approval failed.');
+    }
+  };
+
+  const handleRejectReview = async (id) => {
+    if (!window.confirm('Are you sure you want to reject and delete this review?')) return;
+    try {
+      await api.reviews.reject(id);
+      alert('Review rejected and deleted successfully.');
+      fetchPendingReviews();
+    } catch (err) {
+      alert(err.message || 'Deletion failed.');
+    }
+  };
+
   // Fetch Dashboard Stats
   const fetchStats = async () => {
     setStatsLoading(true);
@@ -94,11 +131,12 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (token) {
-      fetchStats();
-      fetchColleges();
-      fetchFeedbacks();
+      if (activeTab === 'overview') fetchStats();
+      if (activeTab === 'colleges') fetchColleges();
+      if (activeTab === 'feedbacks') fetchFeedbacks();
+      if (activeTab === 'reviews') fetchPendingReviews();
     }
-  }, [token, collegesPage, adminSearch]);
+  }, [token, activeTab, collegesPage, adminSearch]);
 
   // Auth Handler
   const handleLogin = async (e) => {
@@ -324,7 +362,8 @@ export default function AdminDashboard() {
           { id: 'overview', label: 'Overview', icon: LayoutDashboard },
           { id: 'colleges', label: 'Manage Colleges', icon: School },
           { id: 'import', label: 'CSV Importer', icon: UploadCloud },
-          { id: 'feedbacks', label: 'Feedbacks Log', icon: MessageSquare }
+          { id: 'feedbacks', label: 'Feedbacks Log', icon: MessageSquare },
+          { id: 'reviews', label: 'Moderate Reviews', icon: CheckCircle }
         ].map((tab) => {
           const Icon = tab.icon;
           return (
@@ -876,6 +915,82 @@ export default function AdminDashboard() {
                   </p>
                   <span className="text-[9px] text-gray-500 mt-auto pl-1">
                     Submitted: {new Date(fb.created_at).toLocaleString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {/* ────────────────────────────────────────────────────────
+         TAB: REVIEWS MODERATION LIST
+         ──────────────────────────────────────────────────────── */}
+      {activeTab === 'reviews' && (
+        <div className="space-y-6">
+          <h3 className="font-bold text-white text-sm">Student Reviews Moderation</h3>
+
+          {pendingLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="w-8 h-8 border-4 border-[#f59e0b]/20 border-t-[#f59e0b] rounded-full animate-spin" />
+            </div>
+          ) : pendingReviews.length === 0 ? (
+            <div className="glass-card rounded-2xl py-20 text-center text-gray-500 space-y-1">
+              <CheckCircle className="mx-auto text-gray-700 mb-2 animate-bounce" size={32} />
+              <h4 className="font-semibold text-zinc-300">All Caught Up!</h4>
+              <p className="text-[10px]">No pending student reviews waiting for moderation.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {pendingReviews.map((rev) => (
+                <div key={rev.id} className="glass-card rounded-2xl p-5 border border-zinc-850 hover:border-zinc-800 transition flex flex-col gap-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                    <div>
+                      {/* College details */}
+                      <span className="inline-flex px-2 py-0.5 rounded bg-zinc-800 text-[10px] text-zinc-400 font-mono font-semibold">
+                        {rev.college_code} — {rev.college_name}
+                      </span>
+
+                      {/* Student details */}
+                      <div className="mt-2 text-xs text-zinc-400">
+                        Submitted by: <span className="font-semibold text-white">{rev.student_name}</span> ({rev.student_email})
+                        {rev.post_anonymously && (
+                          <span className="ml-2 px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 text-[9px] font-mono font-bold">
+                            Anonymous Option Checked
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Star Rating Display */}
+                      <div className="flex text-[#f59e0b] text-sm mt-1.5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span key={i}>{i < rev.rating ? '★' : '☆'}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex gap-2 self-end sm:self-start">
+                      <button
+                        onClick={() => handleApproveReview(rev.id)}
+                        className="px-3 py-1.5 bg-emerald-600/10 hover:bg-emerald-600 border border-emerald-500/20 text-emerald-400 hover:text-black rounded-lg text-xs font-semibold transition"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleRejectReview(rev.id)}
+                        className="px-3 py-1.5 bg-rose-600/10 hover:bg-rose-600 border border-rose-500/20 text-rose-450 hover:text-white rounded-lg text-xs font-semibold transition"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-zinc-300 bg-zinc-950/40 p-4 rounded-xl border border-zinc-850 leading-relaxed whitespace-pre-line">
+                    {rev.comment}
+                  </p>
+                  
+                  <span className="text-[9px] text-zinc-500 pl-1">
+                    Submitted: {new Date(rev.created_at).toLocaleString()}
                   </span>
                 </div>
               ))}
