@@ -1,16 +1,27 @@
 const db = require('../config/db');
 
 exports.submitReview = async (req, res) => {
-  const { collegeId, rating, comment, postAnonymously } = req.body;
-  const studentId = req.student.id; // From middleware
+  const { 
+    collegeId, rating, comment, postAnonymously,
+    placementsRating, facultyRating, infrastructureRating, hostelsRating, campusLifeRating 
+  } = req.body;
+  const studentId = req.student.id;
 
   if (!collegeId || !rating || !comment) {
     return res.status(400).json({ error: 'Please provide collegeId, rating and comment' });
   }
 
   const numericRating = parseInt(rating);
-  if (isNaN(numericRating) || numericRating < 1 || numericRating > 5) {
-    return res.status(400).json({ error: 'Rating must be an integer between 1 and 5' });
+  const pRating = parseInt(placementsRating) || 5;
+  const fRating = parseInt(facultyRating) || 5;
+  const iRating = parseInt(infrastructureRating) || 5;
+  const hRating = parseInt(hostelsRating) || 5;
+  const cRating = parseInt(campusLifeRating) || 5;
+
+  const validateRange = (val) => !isNaN(val) && val >= 1 && val <= 5;
+
+  if (!validateRange(numericRating) || !validateRange(pRating) || !validateRange(fRating) || !validateRange(iRating) || !validateRange(hRating) || !validateRange(cRating)) {
+    return res.status(400).json({ error: 'All ratings must be integers between 1 and 5' });
   }
 
   try {
@@ -23,9 +34,15 @@ exports.submitReview = async (req, res) => {
     const postAnon = postAnonymously === true;
 
     await db.query(
-      `INSERT INTO college_reviews (college_id, student_id, rating, comment, approved, post_anonymously)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [collegeId, studentId, numericRating, comment.trim(), false, postAnon]
+      `INSERT INTO college_reviews (
+        college_id, student_id, rating, placements_rating, faculty_rating, 
+        infrastructure_rating, hostels_rating, campus_life_rating, comment, approved, post_anonymously
+       )
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+      [
+        collegeId, studentId, numericRating, pRating, fRating, 
+        iRating, hRating, cRating, comment.trim(), false, postAnon
+      ]
     );
 
     res.status(201).json({
@@ -45,7 +62,9 @@ exports.getApprovedReviewsForCollege = async (req, res) => {
   const { collegeId } = req.params;
   try {
     const result = await db.query(
-      `SELECT r.id, r.rating, r.comment, r.post_anonymously, r.created_at, s.name as student_name
+      `SELECT r.id, r.rating, r.placements_rating, r.faculty_rating, 
+              r.infrastructure_rating, r.hostels_rating, r.campus_life_rating,
+              r.comment, r.post_anonymously, r.created_at, s.name as student_name
        FROM college_reviews r
        JOIN students s ON r.student_id = s.id
        WHERE r.college_id = $1 AND r.approved = true
@@ -56,6 +75,11 @@ exports.getApprovedReviewsForCollege = async (req, res) => {
     const processed = result.rows.map(row => ({
       id: row.id,
       rating: row.rating,
+      placementsRating: row.placements_rating,
+      facultyRating: row.faculty_rating,
+      infrastructureRating: row.infrastructure_rating,
+      hostelsRating: row.hostels_rating,
+      campusLifeRating: row.campus_life_rating,
       comment: row.comment,
       created_at: row.created_at,
       studentName: row.post_anonymously ? 'Anonymous Student' : row.student_name
@@ -71,7 +95,9 @@ exports.getApprovedReviewsForCollege = async (req, res) => {
 exports.getPendingReviews = async (req, res) => {
   try {
     const result = await db.query(
-      `SELECT r.id, r.rating, r.comment, r.post_anonymously, r.created_at, 
+      `SELECT r.id, r.rating, r.placements_rating, r.faculty_rating, 
+              r.infrastructure_rating, r.hostels_rating, r.campus_life_rating,
+              r.comment, r.post_anonymously, r.created_at, 
               s.name as student_name, s.email as student_email,
               c.name as college_name, c.code as college_code
        FROM college_reviews r

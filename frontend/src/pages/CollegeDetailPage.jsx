@@ -46,6 +46,16 @@ export default function CollegeDetailPage() {
   // Review submission form states
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
+  const [placementsRating, setPlacementsRating] = useState(5);
+  const [hoverPlacementsRating, setHoverPlacementsRating] = useState(0);
+  const [facultyRating, setFacultyRating] = useState(5);
+  const [hoverFacultyRating, setHoverFacultyRating] = useState(0);
+  const [infrastructureRating, setInfrastructureRating] = useState(5);
+  const [hoverInfrastructureRating, setHoverInfrastructureRating] = useState(0);
+  const [hostelsRating, setHostelsRating] = useState(5);
+  const [hoverHostelsRating, setHoverHostelsRating] = useState(0);
+  const [campusLifeRating, setCampusLifeRating] = useState(5);
+  const [hoverCampusLifeRating, setHoverCampusLifeRating] = useState(0);
   const [comment, setComment] = useState('');
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -104,11 +114,21 @@ export default function CollegeDetailPage() {
         rating,
         comment: comment.trim(),
         postAnonymously,
+        placementsRating,
+        facultyRating,
+        infrastructureRating,
+        hostelsRating,
+        campusLifeRating,
       });
 
       setSubmitSuccess(res.message);
       setComment('');
       setRating(5);
+      setPlacementsRating(5);
+      setFacultyRating(5);
+      setInfrastructureRating(5);
+      setHostelsRating(5);
+      setCampusLifeRating(5);
       setPostAnonymously(false);
     } catch (err) {
       setSubmitError(err.message || 'Failed to submit review.');
@@ -352,14 +372,38 @@ export default function CollegeDetailPage() {
                       })}
                     </span>
                   </div>
-                  {/* Rating display */}
-                  <div className="flex text-amber-500 text-sm">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <span key={i}>{i < r.rating ? '★' : '☆'}</span>
-                    ))}
+                  {/* Overall Rating display */}
+                  <div className="flex items-center gap-1.5 bg-[#f59e0b]/10 text-[#f59e0b] px-2 py-0.5 rounded text-xs font-mono font-bold">
+                    <span>Overall</span>
+                    <div className="flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <span key={i} className="text-[10px]">{i < r.rating ? '★' : '☆'}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <p className="text-sm text-zinc-300 mt-2 whitespace-pre-line leading-relaxed">{r.comment}</p>
+
+                <p className="text-sm text-zinc-300 mt-3 whitespace-pre-line leading-relaxed">{r.comment}</p>
+
+                {/* Sub-ratings grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-4 pt-3 border-t border-zinc-900/40">
+                  {[
+                    { label: 'Placements', val: r.placementsRating },
+                    { label: 'Faculty', val: r.facultyRating },
+                    { label: 'Infrastructure', val: r.infrastructureRating },
+                    { label: 'Hostels', val: r.hostelsRating },
+                    { label: 'Campus Life', val: r.campusLifeRating },
+                  ].map((sub) => (
+                    <div key={sub.label} className="text-left">
+                      <div className="text-[9px] text-zinc-500 uppercase tracking-widest font-semibold">{sub.label}</div>
+                      <div className="flex text-amber-500 text-[11px] mt-0.5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span key={i}>{i < sub.val ? '★' : '☆'}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -383,28 +427,39 @@ export default function CollegeDetailPage() {
                 </div>
               ) : (
                 <form onSubmit={handleReviewSubmit} className="space-y-4">
-                  {/* Star selector */}
-                  <div>
-                    <label className="block text-[11px] uppercase tracking-wider text-zinc-500 mb-1.5">Rating</label>
-                    <div className="flex items-center gap-1.5 text-2xl">
-                      {Array.from({ length: 5 }).map((_, i) => {
-                        const starValue = i + 1;
-                        return (
-                          <button
-                            type="button"
-                            key={i}
-                            onClick={() => setRating(starValue)}
-                            onMouseEnter={() => setHoverRating(starValue)}
-                            onMouseLeave={() => setHoverRating(0)}
-                            className="focus:outline-none transition-transform hover:scale-110"
-                          >
-                            <span className={starValue <= (hoverRating || rating) ? 'text-amber-500' : 'text-zinc-700'}>
-                              ★
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
+                  {/* Star selectors for all 6 categories */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {[
+                      { label: 'Overall Rating', value: rating, setValue: setRating, hover: hoverRating, setHover: setHoverRating },
+                      { label: 'Placements', value: placementsRating, setValue: setPlacementsRating, hover: hoverPlacementsRating, setHover: setHoverPlacementsRating },
+                      { label: 'Faculty', value: facultyRating, setValue: setFacultyRating, hover: hoverFacultyRating, setHover: setHoverFacultyRating },
+                      { label: 'Infrastructure', value: infrastructureRating, setValue: setInfrastructureRating, hover: hoverInfrastructureRating, setHover: setHoverInfrastructureRating },
+                      { label: 'Hostels', value: hostelsRating, setValue: setHostelsRating, hover: hoverHostelsRating, setHover: setHoverHostelsRating },
+                      { label: 'Campus Life', value: campusLifeRating, setValue: setCampusLifeRating, hover: hoverCampusLifeRating, setHover: setHoverCampusLifeRating },
+                    ].map((cat) => (
+                      <div key={cat.label} className="flex items-center justify-between bg-zinc-950/40 p-3 rounded-lg border border-zinc-900/60">
+                        <span className="text-[11px] uppercase tracking-wider text-zinc-400 font-semibold">{cat.label}</span>
+                        <div className="flex items-center gap-1 text-xl">
+                          {Array.from({ length: 5 }).map((_, i) => {
+                            const val = i + 1;
+                            return (
+                              <button
+                                type="button"
+                                key={i}
+                                onClick={() => cat.setValue(val)}
+                                onMouseEnter={() => cat.setHover(val)}
+                                onMouseLeave={() => cat.setHover(0)}
+                                className="focus:outline-none transition-transform hover:scale-110"
+                              >
+                                <span className={val <= (cat.hover || cat.value) ? 'text-amber-500' : 'text-zinc-700'}>
+                                  ★
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
                   </div>
 
                   {/* Comment */}

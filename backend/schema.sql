@@ -70,7 +70,12 @@ CREATE TABLE college_reviews (
   id SERIAL PRIMARY KEY,
   college_id INTEGER REFERENCES colleges(id) ON DELETE CASCADE,
   student_id INTEGER REFERENCES students(id) ON DELETE CASCADE,
-  rating INTEGER CHECK (rating >= 1 AND rating <= 5) NOT NULL,
+  rating INTEGER CHECK (rating >= 1 AND rating <= 5) NOT NULL, -- Overall rating
+  placements_rating INTEGER CHECK (placements_rating >= 1 AND placements_rating <= 5) NOT NULL DEFAULT 5,
+  faculty_rating INTEGER CHECK (faculty_rating >= 1 AND faculty_rating <= 5) NOT NULL DEFAULT 5,
+  infrastructure_rating INTEGER CHECK (infrastructure_rating >= 1 AND infrastructure_rating <= 5) NOT NULL DEFAULT 5,
+  hostels_rating INTEGER CHECK (hostels_rating >= 1 AND hostels_rating <= 5) NOT NULL DEFAULT 5,
+  campus_life_rating INTEGER CHECK (campus_life_rating >= 1 AND campus_life_rating <= 5) NOT NULL DEFAULT 5,
   comment TEXT NOT NULL,
   approved BOOLEAN DEFAULT false,
   post_anonymously BOOLEAN DEFAULT false,

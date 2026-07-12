@@ -988,6 +988,26 @@ export default function AdminDashboard() {
                   <p className="text-xs text-zinc-300 bg-zinc-950/40 p-4 rounded-xl border border-zinc-850 leading-relaxed whitespace-pre-line">
                     {rev.comment}
                   </p>
+
+                  {/* Sub-category breakdown ratings for Admin review */}
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-3 border-t border-zinc-850">
+                    {[
+                      { label: 'Placements', val: rev.placements_rating },
+                      { label: 'Faculty', val: rev.faculty_rating },
+                      { label: 'Infrastructure', val: rev.infrastructure_rating },
+                      { label: 'Hostels', val: rev.hostels_rating },
+                      { label: 'Campus Life', val: rev.campus_life_rating }
+                    ].map((sub) => (
+                      <div key={sub.label} className="text-left">
+                        <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-semibold">{sub.label}</span>
+                        <div className="flex text-amber-500 text-[10px] mt-0.5">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span key={i}>{i < sub.val ? '★' : '☆'}</span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                   
                   <span className="text-[9px] text-zinc-500 pl-1">
                     Submitted: {new Date(rev.created_at).toLocaleString()}
