@@ -22,6 +22,7 @@ CREATE TABLE colleges (
   nba_status VARCHAR(50) DEFAULT 'Not Accredited', -- Accredited / Not Accredited
   website VARCHAR(255),
   logo_url TEXT DEFAULT '/uploads/default-logo.png',
+  image_url VARCHAR(500),
   priority INTEGER NOT NULL DEFAULT 9999,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

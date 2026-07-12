@@ -57,7 +57,7 @@ export default function CollegeListPage() {
 
   const handleShareCollege = async (college, e) => {
     e.stopPropagation();
-    const imageUrl = getCollegeImage(college.id);
+    const imageUrl = college.image_url || getCollegeImage(college.id);
     const shareText = `Check out ${college.name} (${college.code}) on RankEdge!\nPriority Rank: #${college.priority}\nRegion: ${college.region}\nDistrict: ${college.district}`;
     const shareUrl = `${window.location.origin}/colleges/${college.id}`;
 
@@ -388,7 +388,7 @@ export default function CollegeListPage() {
               
               {/* Image thumbnail */}
               <div className="w-10 h-10 rounded-lg overflow-hidden bg-zinc-900 flex-shrink-0">
-                <img src={getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
+                <img src={college.image_url || getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
               </div>
               
               {/* Info */}
@@ -443,7 +443,7 @@ export default function CollegeListPage() {
             >
               {/* Image */}
               <div className="h-32 overflow-hidden bg-zinc-900 relative">
-                <img src={getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
+                <img src={college.image_url || getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
                 {/* Overlay buttons */}
                 <div className="absolute top-2 right-2 flex gap-1.5 z-10">
                   <button

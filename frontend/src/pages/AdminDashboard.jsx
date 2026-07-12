@@ -35,7 +35,7 @@ export default function AdminDashboard() {
   const [collegeForm, setCollegeForm] = useState({
     name: '', code: '', district: 'Chittoor', region: 'SVE', type: 'Engineering',
     autonomous: false, naac_grade: 'A', nba_status: 'Not Accredited', website: '',
-    logo_url: '', priority: 100
+    logo_url: '', image_url: '', priority: 100
   });
 
   // Feedbacks States
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
       setCollegeForm({
         name: '', code: '', district: 'Chittoor', region: 'SVE', type: 'Engineering',
         autonomous: false, naac_grade: 'A', nba_status: 'Not Accredited', website: '',
-        logo_url: '', priority: 100
+        logo_url: '', image_url: '', priority: 100
       });
       fetchColleges();
       fetchStats();
@@ -200,6 +200,7 @@ export default function AdminDashboard() {
       nba_status: college.nba_status || 'Not Accredited',
       website: college.website || '',
       logo_url: college.logo_url || '',
+      image_url: college.image_url || '',
       priority: college.priority
     });
     setShowCollegeModal(true);
@@ -727,6 +728,18 @@ export default function AdminDashboard() {
                     />
                   </div>
 
+                  {/* Cover Profile Image URL */}
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[10px] text-gray-400 uppercase font-semibold">Profile/Banner Image URL</label>
+                    <input
+                      type="text"
+                      value={collegeForm.image_url}
+                      onChange={(e) => setCollegeForm({ ...collegeForm, image_url: e.target.value })}
+                      placeholder="e.g. cover photo url"
+                      className="px-3 py-2 bg-[#0c0f1d] border border-gray-800 rounded-lg text-xs text-white focus:outline-none"
+                    />
+                  </div>
+
                   {/* Submit / Cancel Buttons */}
                   <div className="sm:col-span-2 pt-4 flex justify-end gap-3 border-t border-gray-900">
                     <button
@@ -737,7 +750,7 @@ export default function AdminDashboard() {
                         setCollegeForm({
                           name: '', code: '', district: 'Chittoor', region: 'SVE', type: 'Engineering',
                           autonomous: false, naac_grade: 'A', nba_status: 'Not Accredited', website: '',
-                          logo_url: '', priority: 100
+                          logo_url: '', image_url: '', priority: 100
                         });
                       }}
                       className="px-5 py-2 border border-gray-850 text-gray-300 rounded-lg hover:bg-slate-900 text-xs font-semibold transition"

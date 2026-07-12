@@ -270,7 +270,7 @@ export default function CollegeDetailPage() {
       {/* College image */}
       <div className="w-full h-48 md:h-64 rounded-xl overflow-hidden bg-zinc-900 animate-in">
         <img
-          src={getCollegeImage(college.id)}
+          src={college.image_url || getCollegeImage(college.id)}
           alt={college.name}
           className="w-full h-full object-cover"
         />

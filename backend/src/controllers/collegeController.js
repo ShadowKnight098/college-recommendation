@@ -99,7 +99,7 @@ exports.getCollegeById = async (req, res) => {
 };
 
 exports.createCollege = async (req, res) => {
-  const { name, code, district, region, type, autonomous, naac_grade, nba_status, website, priority, logo_url } = req.body;
+  const { name, code, district, region, type, autonomous, naac_grade, nba_status, website, priority, logo_url, image_url } = req.body;
 
   if (!name || !code || !district || !region || !type) {
     return res.status(400).json({ error: 'Name, code, district, region, and type are required' });
@@ -107,9 +107,9 @@ exports.createCollege = async (req, res) => {
 
   try {
     const result = await db.query(
-      `INSERT INTO colleges (name, code, district, region, type, autonomous, naac_grade, nba_status, website, logo_url, priority)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
-      [name, code, district, region, type, autonomous || false, naac_grade || null, nba_status || 'Not Accredited', website || null, logo_url || '/uploads/default-logo.png', priority || 9999]
+      `INSERT INTO colleges (name, code, district, region, type, autonomous, naac_grade, nba_status, website, logo_url, image_url, priority)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+      [name, code, district, region, type, autonomous || false, naac_grade || null, nba_status || 'Not Accredited', website || null, logo_url || '/uploads/default-logo.png', image_url || null, priority || 9999]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -123,7 +123,7 @@ exports.createCollege = async (req, res) => {
 
 exports.updateCollege = async (req, res) => {
   const { id } = req.params;
-  const { name, code, district, region, type, autonomous, naac_grade, nba_status, website, priority, logo_url } = req.body;
+  const { name, code, district, region, type, autonomous, naac_grade, nba_status, website, priority, logo_url, image_url } = req.body;
 
   try {
     const existing = await db.query('SELECT * FROM colleges WHERE id = $1', [id]);
@@ -134,8 +134,8 @@ exports.updateCollege = async (req, res) => {
     const result = await db.query(
       `UPDATE colleges 
        SET name = $1, code = $2, district = $3, region = $4, type = $5, autonomous = $6, naac_grade = $7, 
-           nba_status = $8, website = $9, logo_url = $10, priority = $11
-       WHERE id = $12 RETURNING *`,
+           nba_status = $8, website = $9, logo_url = $10, image_url = $11, priority = $12
+       WHERE id = $13 RETURNING *`,
       [
         name || existing.rows[0].name,
         code || existing.rows[0].code,
@@ -147,6 +147,7 @@ exports.updateCollege = async (req, res) => {
         nba_status || existing.rows[0].nba_status,
         website !== undefined ? website : existing.rows[0].website,
         logo_url || existing.rows[0].logo_url,
+        image_url !== undefined ? image_url : existing.rows[0].image_url,
         priority !== undefined ? priority : existing.rows[0].priority,
         id
       ]
