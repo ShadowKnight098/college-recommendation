@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 require('dotenv').config();
 
 const db = require('./config/db');
@@ -26,19 +27,33 @@ if (!fs.existsSync(uploadsDir)){
 }
 app.use('/uploads', express.static(uploadsDir));
 
-// Visitor Tracking Middleware - tracks daily visits automatically
+// Visitor Tracking Middleware - tracks unique daily visitors
 app.use(async (req, res, next) => {
-  // Exclude admin stats endpoints to avoid inflating visitor stats during admin operations
-  if (!req.path.startsWith('/api/auth/stats') && req.method === 'GET') {
+  // Exclude static assets/uploads/admin stats
+  if (!req.path.startsWith('/api/auth/stats') && !req.path.startsWith('/uploads') && req.method === 'GET') {
     try {
-      await db.query(`
-        INSERT INTO page_visits (visit_date, count) 
-        VALUES (CURRENT_DATE, 1) 
-        ON CONFLICT (visit_date) 
-        DO UPDATE SET count = page_visits.count + 1
-      `);
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+      const ipHash = crypto.createHash('sha256').update(ip).digest('hex');
+      
+      // Try to record the unique visit for today
+      const uniqueRes = await db.query(`
+        INSERT INTO daily_unique_ips (visit_date, ip_hash)
+        VALUES (CURRENT_DATE, $1)
+        ON CONFLICT (visit_date, ip_hash) DO NOTHING
+        RETURNING visit_date
+      `, [ipHash]);
+
+      // If it was a new unique visit today, increment the counter
+      if (uniqueRes.rows.length > 0) {
+        await db.query(`
+          INSERT INTO page_visits (visit_date, count) 
+          VALUES (CURRENT_DATE, 1) 
+          ON CONFLICT (visit_date) 
+          DO UPDATE SET count = page_visits.count + 1
+        `);
+      }
     } catch (err) {
-      console.error('Error updating page visits tracker:', err.message);
+      console.error('Error updating unique page visits tracker:', err.message);
     }
   }
   next();

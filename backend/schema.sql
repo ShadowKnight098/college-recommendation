@@ -2,6 +2,7 @@
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 -- Drop tables if they exist
+DROP TABLE IF EXISTS daily_unique_ips CASCADE;
 DROP TABLE IF EXISTS page_visits CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
 DROP TABLE IF EXISTS feedbacks CASCADE;
@@ -82,6 +83,13 @@ CREATE TABLE page_visits (
   id SERIAL PRIMARY KEY,
   visit_date DATE UNIQUE DEFAULT CURRENT_DATE,
   count INTEGER DEFAULT 1
+);
+
+-- 5b. Daily Unique IPs Tracker (for unique visitor counting)
+CREATE TABLE daily_unique_ips (
+  visit_date DATE DEFAULT CURRENT_DATE,
+  ip_hash VARCHAR(64) NOT NULL,
+  PRIMARY KEY (visit_date, ip_hash)
 );
 
 -- Indexes for Optimization
