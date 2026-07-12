@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
-import { ArrowLeft, MapPin, Building2, Globe, Award, Shield, Hash, Users, BookOpen, Calendar, ExternalLink } from 'lucide-react';
+import { ArrowLeft, MapPin, Building2, Globe, Award, Shield, Hash, Users, BookOpen, Calendar, ExternalLink, Heart, Share2 } from 'lucide-react';
 
 const CAMPUS_IMAGES = [
   'https://images.unsplash.com/photo-1562774053-701939374585?w=800&h=400&fit=crop',
@@ -61,6 +61,49 @@ export default function CollegeDetailPage() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState('');
+
+  // Favorites & Share state handlers
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const saved = localStorage.getItem('favorites');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+
+  const isFavorited = favorites.includes(parseInt(id));
+
+  const handleToggleFavorite = () => {
+    let updated;
+    const numericId = parseInt(id);
+    if (favorites.includes(numericId)) {
+      updated = favorites.filter(favId => favId !== numericId);
+    } else {
+      updated = [...favorites, numericId];
+    }
+    setFavorites(updated);
+    localStorage.setItem('favorites', JSON.stringify(updated));
+  };
+
+  const handleSharePage = async () => {
+    if (!college) return;
+    const shareText = `Check out ${college.name} (${college.code}) on RankEdge!\nPriority Rank: #${college.priority}\nRegion: ${college.region}\nDistrict: ${college.district}`;
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: college.name,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.log('Share canceled or failed:', err);
+      }
+    } else {
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + '\nLink: ' + shareUrl)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
 
   // Observe student auth status changes
   useEffect(() => {
@@ -166,14 +209,40 @@ export default function CollegeDetailPage() {
   /* ---------- Loaded state ---------- */
   return (
     <div className="max-w-4xl mx-auto px-6 py-8 page-enter">
-      {/* Back link */}
-      <Link
-        to="/colleges"
-        className="flex items-center gap-1.5 text-[13px] text-zinc-500 hover:text-white transition-colors mb-6"
-      >
-        <ArrowLeft size={14} />
-        Back to Rankings
-      </Link>
+      {/* Back link & actions */}
+      <div className="flex items-center justify-between mb-6">
+        <Link
+          to="/colleges"
+          className="flex items-center gap-1.5 text-[13px] text-zinc-500 hover:text-white transition-colors"
+        >
+          <ArrowLeft size={14} />
+          Back to Rankings
+        </Link>
+        
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleToggleFavorite}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition cursor-pointer ${
+              isFavorited
+                ? 'bg-rose-500/10 border-rose-500/30 text-rose-455 hover:bg-rose-500/20'
+                : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Heart size={13} className={isFavorited ? 'fill-rose-500 text-rose-500' : ''} />
+            <span>{isFavorited ? 'Favorited' : 'Favorite'}</span>
+          </button>
+          
+          <button
+            type="button"
+            onClick={handleSharePage}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white text-xs font-semibold transition cursor-pointer"
+          >
+            <Share2 size={13} />
+            <span>Share</span>
+          </button>
+        </div>
+      </div>
 
       {/* College image */}
       <div className="w-full h-48 md:h-64 rounded-xl overflow-hidden bg-zinc-900 animate-in">

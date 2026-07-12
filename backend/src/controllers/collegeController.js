@@ -3,12 +3,23 @@ const csv = require('csv-parser');
 const db = require('../config/db');
 
 exports.getAllColleges = async (req, res) => {
-  const { district, type, region, autonomous, search, sortBy, order, page = 1, limit = 10 } = req.query;
+  const { district, type, region, autonomous, search, sortBy, order, ids, page = 1, limit = 10 } = req.query;
   const offset = (page - 1) * limit;
 
   let queryText = 'SELECT *, (SELECT json_agg(branch_code) FROM college_branches WHERE college_id = colleges.id) as branches FROM colleges WHERE 1=1';
   const queryParams = [];
   let paramIndex = 1;
+
+  if (ids) {
+    const idArray = ids.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (idArray.length > 0) {
+      queryText += ` AND id = ANY($${paramIndex})`;
+      queryParams.push(idArray);
+      paramIndex++;
+    } else {
+      queryText += ` AND 1=0`; // Force empty result if list is empty
+    }
+  }
 
   if (district) {
     queryText += ` AND district = $${paramIndex}`;

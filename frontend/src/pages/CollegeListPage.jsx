@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
-import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid } from 'lucide-react';
+import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid, Heart, Share2 } from 'lucide-react';
 
 const CAMPUS_IMAGES = [
   'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
@@ -16,6 +16,7 @@ const CAMPUS_IMAGES = [
 const getCollegeImage = (id) => CAMPUS_IMAGES[id % CAMPUS_IMAGES.length];
 
 export default function CollegeListPage() {
+  const navigate = useNavigate();
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
@@ -33,6 +34,48 @@ export default function CollegeListPage() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [viewMode, setViewMode] = useState('card');
 
+  // Favorites & Share States
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const saved = localStorage.getItem('favorites');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  const toggleFavorite = (collegeId, e) => {
+    e.stopPropagation();
+    let updated;
+    if (favorites.includes(collegeId)) {
+      updated = favorites.filter(id => id !== collegeId);
+    } else {
+      updated = [...favorites, collegeId];
+    }
+    setFavorites(updated);
+    localStorage.setItem('favorites', JSON.stringify(updated));
+  };
+
+  const handleShareCollege = async (college, e) => {
+    e.stopPropagation();
+    const shareText = `Check out ${college.name} (${college.code}) on RankEdge!\nPriority Rank: #${college.priority}\nRegion: ${college.region}\nDistrict: ${college.district}`;
+    const shareUrl = `${window.location.origin}/colleges/${college.id}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: college.name,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.log('Share canceled or failed:', err);
+      }
+    } else {
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + '\nLink: ' + shareUrl)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
+
   useEffect(() => {
     const loadFilters = async () => {
       try {
@@ -46,9 +89,13 @@ export default function CollegeListPage() {
   const fetchColleges = async () => {
     setLoading(true);
     try {
-      const data = await api.colleges.getAll({
+      const params = {
         search, district, region, type, autonomous, sortBy, order, page, limit: 12
-      });
+      };
+      if (showFavoritesOnly) {
+        params.ids = favorites.length > 0 ? favorites.join(',') : '-1';
+      }
+      const data = await api.colleges.getAll(params);
       setColleges(data.colleges);
       setTotalCount(data.pagination.total);
       setTotalPages(data.pagination.totalPages);
@@ -56,7 +103,7 @@ export default function CollegeListPage() {
     finally { setLoading(false); }
   };
 
-  useEffect(() => { fetchColleges(); }, [page, district, region, type, autonomous, sortBy, order]);
+  useEffect(() => { fetchColleges(); }, [page, district, region, type, autonomous, sortBy, order, showFavoritesOnly]);
 
   useEffect(() => {
     if (search.trim().length < 2) { setSuggestions([]); return; }
@@ -152,7 +199,20 @@ export default function CollegeListPage() {
 
       {/* Filters + View Toggle */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-4">
-        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 flex-grow">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 flex-grow animate-in">
+          <button
+            type="button"
+            onClick={() => { setShowFavoritesOnly(!showFavoritesOnly); setPage(1); }}
+            className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border text-[13px] font-semibold transition cursor-pointer w-full sm:w-auto ${
+              showFavoritesOnly
+                ? 'bg-rose-500/10 border-rose-500/30 text-rose-455 hover:bg-rose-500/20'
+                : 'bg-[#18181b] border-zinc-800 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Heart size={14} className={showFavoritesOnly ? 'fill-rose-500 text-rose-500' : ''} />
+            <span>Favorites Only</span>
+          </button>
+
           <select
             value={region}
             onChange={(e) => { setRegion(e.target.value); setPage(1); }}
@@ -293,10 +353,10 @@ export default function CollegeListPage() {
         /* LIST VIEW */
         <div className="space-y-1">
           {colleges.map((college, index) => (
-            <Link
-              to={`/colleges/${college.id}`}
+            <div
               key={college.id}
-              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-zinc-900/50 transition-colors group animate-in"
+              onClick={() => navigate(`/colleges/${college.id}`)}
+              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-zinc-900/50 transition-colors group cursor-pointer animate-in"
               style={{ animationDelay: `${index * 0.03}s` }}
             >
               {/* Rank */}
@@ -322,22 +382,63 @@ export default function CollegeListPage() {
                 <span className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 font-mono">{college.region}</span>
                 <span className="text-[11px] text-zinc-605 font-mono">{college.code}</span>
               </div>
-            </Link>
+
+              {/* Actions */}
+              <div className="flex items-center gap-1 flex-shrink-0 pl-2">
+                <button
+                  type="button"
+                  onClick={(e) => toggleFavorite(college.id, e)}
+                  className={`p-2 rounded-lg transition hover:bg-zinc-800 ${
+                    favorites.includes(college.id) ? 'text-rose-500' : 'text-zinc-500 hover:text-rose-455'
+                  }`}
+                  title={favorites.includes(college.id) ? 'Remove from Favorites' : 'Add to Favorites'}
+                >
+                  <Heart size={15} className={favorites.includes(college.id) ? 'fill-rose-500' : ''} />
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => handleShareCollege(college, e)}
+                  className="p-2 rounded-lg text-zinc-500 hover:text-white transition hover:bg-zinc-800"
+                  title="Share College"
+                >
+                  <Share2 size={15} />
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       ) : (
         /* CARD VIEW */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {colleges.map((college, index) => (
-            <Link
-              to={`/colleges/${college.id}`}
+            <div
               key={college.id}
-              className="card p-0 overflow-hidden hover:border-zinc-700 transition-colors card-lift animate-in"
+              onClick={() => navigate(`/colleges/${college.id}`)}
+              className="card p-0 overflow-hidden hover:border-zinc-700 transition-colors card-lift cursor-pointer animate-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
               {/* Image */}
-              <div className="h-32 overflow-hidden bg-zinc-900">
+              <div className="h-32 overflow-hidden bg-zinc-900 relative">
                 <img src={getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
+                {/* Overlay buttons */}
+                <div className="absolute top-2 right-2 flex gap-1.5 z-10">
+                  <button
+                    type="button"
+                    onClick={(e) => toggleFavorite(college.id, e)}
+                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 border border-white/10 flex items-center justify-center text-white transition-colors"
+                    title={favorites.includes(college.id) ? 'Remove from Favorites' : 'Add to Favorites'}
+                  >
+                    <Heart size={13} className={favorites.includes(college.id) ? 'fill-rose-500 text-rose-550' : 'text-white'} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => handleShareCollege(college, e)}
+                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 border border-white/10 flex items-center justify-center text-white transition-colors"
+                    title="Share College"
+                  >
+                    <Share2 size={13} className="text-white" />
+                  </button>
+                </div>
               </div>
               
               <div className="p-4">
@@ -392,10 +493,10 @@ export default function CollegeListPage() {
                 {/* Bottom */}
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-800/50">
                   <span className="badge bg-zinc-900 text-zinc-500">{college.region}</span>
-                  <span className="text-[12px] text-emerald-500">View details →</span>
+                  <span className="text-[12px] text-emerald-500 font-medium">View details →</span>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}
