@@ -57,23 +57,47 @@ export default function CollegeListPage() {
 
   const handleShareCollege = async (college, e) => {
     e.stopPropagation();
+    const imageUrl = getCollegeImage(college.id);
     const shareText = `Check out ${college.name} (${college.code}) on RankEdge!\nPriority Rank: #${college.priority}\nRegion: ${college.region}\nDistrict: ${college.district}`;
     const shareUrl = `${window.location.origin}/colleges/${college.id}`;
 
     if (navigator.share) {
       try {
-        await navigator.share({
+        // Fetch image as blob and build File object
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], `college-${college.code}.jpg`, { type: 'image/jpeg' });
+
+        const shareData = {
           title: college.name,
           text: shareText,
           url: shareUrl,
-        });
+        };
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          shareData.files = [file];
+        }
+
+        await navigator.share(shareData);
+        return;
       } catch (err) {
-        console.log('Share canceled or failed:', err);
+        console.log('File sharing failed, falling back to text-only share:', err);
+        try {
+          await navigator.share({
+            title: college.name,
+            text: shareText,
+            url: shareUrl,
+          });
+          return;
+        } catch (e2) {
+          console.log('Text-only share failed:', e2);
+        }
       }
-    } else {
-      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + '\nLink: ' + shareUrl)}`;
-      window.open(whatsappUrl, '_blank');
     }
+
+    // Desktop fallback: include image link inside WhatsApp message
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + '\nCollege Image: ' + imageUrl + '\nLink: ' + shareUrl)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   useEffect(() => {
