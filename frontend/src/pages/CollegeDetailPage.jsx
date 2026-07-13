@@ -72,6 +72,31 @@ export default function CollegeDetailPage() {
 
   const isFavorited = favorites.includes(parseInt(id));
 
+  const [compareIds, setCompareIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem('compareIds');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+
+  const isComparing = compareIds.includes(parseInt(id));
+
+  const handleToggleCompare = () => {
+    let updated;
+    const numericId = parseInt(id);
+    if (compareIds.includes(numericId)) {
+      updated = compareIds.filter(cmpId => cmpId !== numericId);
+    } else {
+      if (compareIds.length >= 4) {
+        alert('You can select a maximum of 4 colleges to compare.');
+        return;
+      }
+      updated = [...compareIds, numericId];
+    }
+    setCompareIds(updated);
+    localStorage.setItem('compareIds', JSON.stringify(updated));
+  };
+
   const handleToggleFavorite = () => {
     let updated;
     const numericId = parseInt(id);
@@ -243,6 +268,19 @@ export default function CollegeDetailPage() {
         </Link>
         
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleToggleCompare}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition cursor-pointer ${
+              isComparing
+                ? 'bg-amber-500/10 border-amber-500/30 text-[#f59e0b] hover:bg-amber-500/20'
+                : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Building2 size={13} className={isComparing ? 'text-[#f59e0b]' : ''} />
+            <span>{isComparing ? 'Comparing' : 'Compare'}</span>
+          </button>
+
           <button
             type="button"
             onClick={handleToggleFavorite}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
-import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid, Heart, Share2 } from 'lucide-react';
+import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid, Heart, Share2, ArrowRight } from 'lucide-react';
 
 const CAMPUS_IMAGES = [
   'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
@@ -34,7 +34,7 @@ export default function CollegeListPage() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [viewMode, setViewMode] = useState('card');
 
-  // Favorites & Share States
+  // Favorites, Compare & Share States
   const [favorites, setFavorites] = useState(() => {
     try {
       const saved = localStorage.getItem('favorites');
@@ -42,6 +42,34 @@ export default function CollegeListPage() {
     } catch { return []; }
   });
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  const [compareIds, setCompareIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem('compareIds');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+
+  const toggleCompare = (collegeId, e) => {
+    if (e) e.stopPropagation();
+    let updated;
+    if (compareIds.includes(collegeId)) {
+      updated = compareIds.filter(id => id !== collegeId);
+    } else {
+      if (compareIds.length >= 4) {
+        alert('You can select a maximum of 4 colleges to compare.');
+        return;
+      }
+      updated = [...compareIds, collegeId];
+    }
+    setCompareIds(updated);
+    localStorage.setItem('compareIds', JSON.stringify(updated));
+  };
+
+  const clearCompare = () => {
+    setCompareIds([]);
+    localStorage.removeItem('compareIds');
+  };
 
   const toggleFavorite = (collegeId, e) => {
     e.stopPropagation();
@@ -380,7 +408,11 @@ export default function CollegeListPage() {
             <div
               key={college.id}
               onClick={() => navigate(`/colleges/${college.id}`)}
-              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-zinc-900/50 transition-colors group cursor-pointer animate-in"
+              className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all group cursor-pointer animate-in border ${
+                compareIds.includes(college.id)
+                  ? 'border-amber-500/40 bg-amber-500/[0.02] shadow-sm shadow-amber-500/5 hover:bg-amber-500/[0.04]'
+                  : 'border-transparent hover:bg-zinc-900/50'
+              }`}
               style={{ animationDelay: `${index * 0.03}s` }}
             >
               {/* Rank */}
@@ -411,6 +443,16 @@ export default function CollegeListPage() {
               <div className="flex items-center gap-1 flex-shrink-0 pl-2">
                 <button
                   type="button"
+                  onClick={(e) => toggleCompare(college.id, e)}
+                  className={`p-2 rounded-lg transition hover:bg-zinc-800 ${
+                    compareIds.includes(college.id) ? 'text-[#f59e0b]' : 'text-zinc-500 hover:text-white'
+                  }`}
+                  title={compareIds.includes(college.id) ? 'Remove from Comparison' : 'Select to Compare'}
+                >
+                  <Building2 size={15} />
+                </button>
+                <button
+                  type="button"
                   onClick={(e) => toggleFavorite(college.id, e)}
                   className={`p-2 rounded-lg transition hover:bg-zinc-800 ${
                     favorites.includes(college.id) ? 'text-rose-500' : 'text-zinc-500 hover:text-rose-455'
@@ -438,7 +480,11 @@ export default function CollegeListPage() {
             <div
               key={college.id}
               onClick={() => navigate(`/colleges/${college.id}`)}
-              className="card p-0 overflow-hidden hover:border-zinc-700 transition-colors card-lift cursor-pointer animate-in"
+              className={`card p-0 overflow-hidden transition-all card-lift cursor-pointer animate-in ${
+                compareIds.includes(college.id)
+                  ? 'border-amber-500/50 shadow-md shadow-amber-500/5 bg-amber-500/[0.01]'
+                  : 'hover:border-zinc-700'
+              }`}
               style={{ animationDelay: `${index * 0.05}s` }}
             >
               {/* Image */}
@@ -446,6 +492,18 @@ export default function CollegeListPage() {
                 <img src={college.image_url || getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
                 {/* Overlay buttons */}
                 <div className="absolute top-2 right-2 flex gap-1.5 z-10">
+                  <button
+                    type="button"
+                    onClick={(e) => toggleCompare(college.id, e)}
+                    className={`w-8 h-8 rounded-full border border-white/10 flex items-center justify-center transition-colors ${
+                      compareIds.includes(college.id)
+                        ? 'bg-amber-500 text-black hover:bg-amber-600'
+                        : 'bg-black/60 hover:bg-black/85 text-white'
+                    }`}
+                    title={compareIds.includes(college.id) ? 'Remove from Comparison' : 'Select to Compare'}
+                  >
+                    <Building2 size={13} />
+                  </button>
                   <button
                     type="button"
                     onClick={(e) => toggleFavorite(college.id, e)}
@@ -561,6 +619,33 @@ export default function CollegeListPage() {
           <span className="text-[12px] text-zinc-700 ml-3">
             Page {page} of {totalPages}
           </span>
+        </div>
+      )}
+
+      {/* Sticky Bottom Compare Bar */}
+      {compareIds.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass-card px-5 py-3 rounded-full flex items-center justify-between gap-6 border border-amber-500/30 bg-black/80 backdrop-blur-md shadow-lg shadow-amber-500/10 animate-fade-in-up">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
+            <span className="text-xs font-bold text-white tracking-wide whitespace-nowrap">
+              Compare Colleges: {compareIds.length} / 4
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={clearCompare}
+              className="text-[10px] text-zinc-500 hover:text-white font-semibold transition cursor-pointer"
+            >
+              Clear
+            </button>
+            <button
+              onClick={() => navigate(`/compare?ids=${compareIds.join(',')}`)}
+              className="px-4 py-1.5 bg-[#f59e0b] hover:bg-[#d97706] text-black text-xs font-extrabold rounded-full transition shadow-md shadow-amber-500/10 flex items-center gap-1 cursor-pointer whitespace-nowrap"
+            >
+              Compare Now
+              <ArrowRight size={12} />
+            </button>
+          </div>
         </div>
       )}
     </div>

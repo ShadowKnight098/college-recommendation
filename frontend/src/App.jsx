@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import { GraduationCap, Menu, X, LogOut, User } from 'lucide-react';
 import HomePage from './pages/HomePage';
 import CollegeListPage from './pages/CollegeListPage';
+import ComparePage from './pages/ComparePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import AdminDashboard from './pages/AdminDashboard';
@@ -12,6 +13,7 @@ import { api } from './services/api';
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Rankings', path: '/colleges' },
+  { label: 'Compare', path: '/compare' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
@@ -333,6 +335,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/colleges" element={<CollegeListPage />} />
+            <Route path="/compare" element={<ComparePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/colleges/:id" element={<CollegeDetailPage />} />
