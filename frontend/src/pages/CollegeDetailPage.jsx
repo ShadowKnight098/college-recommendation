@@ -258,10 +258,10 @@ export default function CollegeDetailPage() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-8 page-enter">
       {/* Back link & actions */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <Link
           to="/colleges"
-          className="flex items-center gap-1.5 text-[13px] text-zinc-500 hover:text-white transition-colors"
+          className="flex items-center gap-1.5 text-[13px] text-zinc-500 hover:text-white transition-colors self-start"
         >
           <ArrowLeft size={14} />
           Back to Rankings
