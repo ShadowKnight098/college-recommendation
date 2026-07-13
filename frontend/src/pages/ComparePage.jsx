@@ -180,11 +180,11 @@ export default function ComparePage() {
         </div>
       ) : (
         /* Comparisons Columns Grid */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
+        <div className="flex gap-4 overflow-x-auto pb-4 snap-x md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-start scrollbar-thin">
           {colleges.map((college) => (
             <div
               key={college.id}
-              className="card p-4 space-y-5 border border-zinc-850 hover:border-zinc-800 transition relative animate-in"
+              className="card p-4 space-y-5 border border-zinc-850 hover:border-zinc-800 transition relative animate-in snap-start flex-shrink-0 w-[85vw] md:w-auto"
             >
               {/* Image & Remove Header */}
               <div className="h-28 rounded-xl overflow-hidden bg-zinc-900 relative">

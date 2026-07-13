@@ -491,19 +491,7 @@ export default function CollegeListPage() {
               <div className="h-32 overflow-hidden bg-zinc-900 relative">
                 <img src={college.image_url || getCollegeImage(college.id)} alt="" className="w-full h-full object-cover" />
                 {/* Overlay buttons */}
-                <div className="absolute top-2 right-2 flex gap-1.5 z-10">
-                  <button
-                    type="button"
-                    onClick={(e) => toggleCompare(college.id, e)}
-                    className={`w-8 h-8 rounded-full border border-white/10 flex items-center justify-center transition-colors ${
-                      compareIds.includes(college.id)
-                        ? 'bg-amber-500 text-black hover:bg-amber-600'
-                        : 'bg-black/60 hover:bg-black/85 text-white'
-                    }`}
-                    title={compareIds.includes(college.id) ? 'Remove from Comparison' : 'Select to Compare'}
-                  >
-                    <Building2 size={13} />
-                  </button>
+                <div className="absolute top-2 right-2 flex z-10">
                   <button
                     type="button"
                     onClick={(e) => toggleFavorite(college.id, e)}
@@ -511,14 +499,6 @@ export default function CollegeListPage() {
                     title={favorites.includes(college.id) ? 'Remove from Favorites' : 'Add to Favorites'}
                   >
                     <Heart size={13} className={favorites.includes(college.id) ? 'fill-rose-500 text-rose-550' : 'text-white'} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => handleShareCollege(college, e)}
-                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 border border-white/10 flex items-center justify-center text-white transition-colors"
-                    title="Share College"
-                  >
-                    <Share2 size={13} className="text-white" />
                   </button>
                 </div>
               </div>
@@ -574,8 +554,31 @@ export default function CollegeListPage() {
                 
                 {/* Bottom */}
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-800/50">
-                  <span className="badge bg-zinc-900 text-zinc-500">{college.region}</span>
-                  <span className="text-[12px] text-emerald-500 font-medium">View details →</span>
+                  <span className="badge bg-zinc-900 text-zinc-500 font-mono">{college.region}</span>
+                  
+                  <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      type="button"
+                      onClick={(e) => toggleCompare(college.id, e)}
+                      className={`p-1.5 rounded-lg border transition cursor-pointer ${
+                        compareIds.includes(college.id)
+                          ? 'bg-amber-500/10 border-amber-500/20 text-[#f59e0b]'
+                          : 'bg-zinc-950 border-zinc-900 text-zinc-500 hover:text-white'
+                      }`}
+                      title={compareIds.includes(college.id) ? 'Remove from Compare' : 'Add to Compare'}
+                    >
+                      <Building2 size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => handleShareCollege(college, e)}
+                      className="p-1.5 rounded-lg border bg-zinc-950 border-zinc-900 text-zinc-500 hover:text-white transition cursor-pointer"
+                      title="Share"
+                    >
+                      <Share2 size={13} />
+                    </button>
+                    <span className="text-[12px] text-emerald-500 font-medium ml-1">View details →</span>
+                  </div>
                 </div>
               </div>
             </div>
