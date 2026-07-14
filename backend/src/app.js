@@ -17,8 +17,10 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Apply Helmet security headers
-app.use(helmet());
+// Apply Helmet security headers with cross-origin resource sharing enabled for static uploads
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 
 // Apply rate limiting on API endpoints to prevent brute-force and DoS
 const apiLimiter = rateLimit({
@@ -31,14 +33,17 @@ app.use('/api/', apiLimiter);
 // Enable CORS for trusted origins only
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',') 
-  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+  : [
+      'http://localhost:3000', 'http://127.0.0.1:3000',
+      'http://localhost:5173', 'http://127.0.0.1:5173'
+    ];
 
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error('Access denied by CORS security policy.'));
+      callback(null, false); // Reject gracefully in CORS rather than throwing a 500 error
     }
   },
   credentials: true
