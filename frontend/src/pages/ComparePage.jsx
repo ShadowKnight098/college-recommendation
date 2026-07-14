@@ -123,6 +123,14 @@ export default function ComparePage() {
         )}
       </div>
 
+      {/* Disclaimer Message */}
+      <div className="bg-amber-500/5 border border-amber-500/20 text-amber-500 rounded-xl p-3.5 text-xs flex items-start gap-2.5 shadow-sm shadow-amber-500/[0.02]">
+        <Shield size={16} className="flex-shrink-0 mt-0.5" />
+        <span>
+          <strong>Disclaimer:</strong> This data is compiled from various official institutional websites. Please consider and verify everything independently before making decisions.
+        </span>
+      </div>
+
       {/* Lookup search bar */}
       <div className="relative max-w-xl">
         <div className="relative">

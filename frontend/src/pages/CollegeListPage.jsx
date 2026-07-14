@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
-import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid, Heart, Share2, ArrowRight } from 'lucide-react';
+import { Search, MapPin, Building2, School, ArrowUpDown, ChevronLeft, ChevronRight, Globe, Filter, X, LayoutList, LayoutGrid, Heart, Share2, ArrowRight, Shield } from 'lucide-react';
 
 const CAMPUS_IMAGES = [
   'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
@@ -204,6 +204,14 @@ export default function CollegeListPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-semibold text-white">Rankings</h1>
         <span className="text-sm text-zinc-600">{totalCount} colleges</span>
+      </div>
+
+      {/* Disclaimer Message */}
+      <div className="bg-amber-500/5 border border-amber-500/20 text-amber-500 rounded-xl p-3.5 text-xs flex items-start gap-2.5 mb-6 shadow-sm shadow-amber-500/[0.02]">
+        <Shield size={16} className="flex-shrink-0 mt-0.5" />
+        <span>
+          <strong>Disclaimer:</strong> This data is compiled from various official institutional websites. Please consider and verify everything independently before making decisions.
+        </span>
       </div>
 
       {/* Search */}

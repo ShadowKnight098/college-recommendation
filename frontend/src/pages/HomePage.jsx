@@ -4,9 +4,17 @@ import { ArrowRight, Shield, Zap } from 'lucide-react';
 
 function HomePage() {
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 space-y-16 md:space-y-24 animate-in">
+    <div className="max-w-6xl mx-auto px-6 py-8 md:py-16 space-y-12 md:space-y-20 animate-in">
+      {/* Disclaimer Message */}
+      <div className="bg-amber-500/5 border border-amber-500/20 text-amber-500 rounded-xl p-3.5 text-xs flex items-start gap-2.5 shadow-sm shadow-amber-500/[0.02]">
+        <Shield size={16} className="flex-shrink-0 mt-0.5" />
+        <span>
+          <strong>Disclaimer:</strong> This data is compiled from various official institutional websites. Please consider and verify everything independently before making decisions.
+        </span>
+      </div>
+
       {/* Hero */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-8 md:pt-16 pb-12">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pb-12">
         <div className="space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.05]">
             Find the right

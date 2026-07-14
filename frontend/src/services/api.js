@@ -55,7 +55,19 @@ export const api = {
       ).toString();
       return request(`/colleges?${query}`);
     },
-    getFilters: () => request('/colleges/filters'),
+    getFilters: async () => {
+      const cached = localStorage.getItem('college_filters');
+      if (cached) {
+        try {
+          return JSON.parse(cached);
+        } catch (e) {
+          // fallback to fetch if json invalid
+        }
+      }
+      const data = await request('/colleges/filters');
+      localStorage.setItem('college_filters', JSON.stringify(data));
+      return data;
+    },
     getById: (id) => request(`/colleges/${id}`),
     create: (data) => request('/colleges', {
       method: 'POST',
