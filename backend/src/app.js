@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -15,10 +17,35 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enable CORS for frontend requests
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Apply Helmet security headers
+app.use(helmet());
+
+// Apply rate limiting on API endpoints to prevent brute-force and DoS
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 150, // Limit each IP to 150 requests per window
+  message: { error: 'Too many requests from this IP, please try again later.' }
+});
+app.use('/api/', apiLimiter);
+
+// Enable CORS for trusted origins only
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',') 
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Access denied by CORS security policy.'));
+    }
+  },
+  credentials: true
+}));
+
+app.use(express.json({ limit: '1mb' })); // Limit body sizes to prevent large payload DoS
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 // Create uploads folder if not exists
 const uploadsDir = path.join(__dirname, '../uploads');

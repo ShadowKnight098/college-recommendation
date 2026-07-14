@@ -8,6 +8,14 @@ exports.signup = async (req, res) => {
     return res.status(400).json({ error: 'Please provide name, email and password' });
   }
 
+  // Enforce strong password complexity (min 8 chars, 1 upper, 1 lower, 1 digit, 1 special char)
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      error: 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.'
+    });
+  }
+
   try {
     // Check if email already exists
     const checkEmail = await db.query('SELECT id FROM students WHERE email = $1', [email.trim().toLowerCase()]);

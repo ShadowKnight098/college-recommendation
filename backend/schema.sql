@@ -109,10 +109,10 @@ CREATE INDEX IF NOT EXISTS idx_reviews_approved_college ON college_reviews(colle
 -- SEED DATA
 -- ────────────────────────────────────────────────────────
 
--- Seed Admin User (username: admin, password: admin123)
--- Hash generated using bcrypt ($2a$10$wU/2Wf6.xVepO15t35JqZeqZ.17zG5W.lZ69uO29pD0pG63k4n3Iq)
+-- Seed Admin User (username: admin, password: @Moonknight831)
+-- Hash generated using bcrypt ($2a$10$JhBMco2RnrvgsB915AshBObLVIxhKE/04ocaWzPsBTeaDIiLb94hy)
 INSERT INTO admins (username, password_hash, role) VALUES 
-('admin', '$2a$10$wU/2Wf6.xVepO15t35JqZeqZ.17zG5W.lZ69uO29pD0pG63k4n3Iq', 'admin');
+('admin', '$2a$10$JhBMco2RnrvgsB915AshBObLVIxhKE/04ocaWzPsBTeaDIiLb94hy', 'admin');
 
 
 

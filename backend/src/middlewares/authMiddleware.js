@@ -20,6 +20,12 @@ module.exports = (req, res, next) => {
   try {
     const secret = getSecret();
     const decoded = jwt.verify(token, secret);
+    
+    // Explicitly verify admin role to block student token privilege escalation
+    if (decoded.role !== 'admin') {
+      return res.status(403).json({ error: 'Access denied. Insufficient permissions.' });
+    }
+    
     req.user = decoded;
     next();
   } catch (error) {
