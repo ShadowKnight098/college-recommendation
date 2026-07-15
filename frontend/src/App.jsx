@@ -9,12 +9,14 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import AdminDashboard from './pages/AdminDashboard';
 import CollegeDetailPage from './pages/CollegeDetailPage';
+import ProgressPage from './pages/ProgressPage';
 import { api } from './services/api';
 
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Rankings', path: '/colleges' },
   { label: 'Compare', path: '/compare' },
+  { label: 'Progress', path: '/progress' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
@@ -319,6 +321,7 @@ function Footer() {
         <span className="text-xs text-zinc-600">© 2025 RankEdge</span>
         <div className="flex gap-6">
           <Link to="/colleges" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Rankings</Link>
+          <Link to="/progress" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Progress</Link>
           <Link to="/about" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">About</Link>
           <Link to="/contact" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Contact</Link>
         </div>
@@ -337,6 +340,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/colleges" element={<CollegeListPage />} />
             <Route path="/compare" element={<ComparePage />} />
+            <Route path="/progress" element={<ProgressPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/colleges/:id" element={<CollegeDetailPage />} />
