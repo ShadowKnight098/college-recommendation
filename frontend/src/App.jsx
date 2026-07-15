@@ -318,7 +318,7 @@ function Footer() {
   return (
     <footer className="border-t border-zinc-900 py-8 px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-        <span className="text-xs text-zinc-600">© 2025 RankEdge</span>
+        <span className="text-xs text-zinc-600">© 2026 RankEdge</span>
         <div className="flex gap-6">
           <Link to="/colleges" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Rankings</Link>
           <Link to="/progress" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Progress</Link>
