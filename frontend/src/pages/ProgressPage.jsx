@@ -38,48 +38,48 @@ export default function ProgressPage() {
 
   const roadmapItems = [
     {
+      id: 'cutoff_predictor',
+      title: 'Previous Year Cut-Off Rank Matcher',
+      status: 'Planned',
+      statusColor: 'bg-zinc-900 text-zinc-500 border-zinc-800',
+      percentage: 0,
+      desc: 'Create an intelligent filter system to input your EAPCET rank, reservation category, gender, and region to match previous year allotment cutoffs.',
+      category: 'Core Predictor Engine',
+      timeline: 'Planned',
+      upvotes: 0
+    },
+    {
       id: 'college_images',
       title: 'College Images in Listing Cards',
-      status: 'Completed',
-      statusColor: 'bg-emerald-500/10 text-emerald-450 border-emerald-500/20',
-      percentage: 100,
+      status: 'Planned',
+      statusColor: 'bg-zinc-900 text-zinc-500 border-zinc-800',
+      percentage: 0,
       desc: 'Seamlessly render high-quality campus cover images directly on the college comparison and listing cards for better visual clarity.',
       category: 'UI/UX Improvement',
-      timeline: 'Completed Today',
-      upvotes: 142
+      timeline: 'Planned',
+      upvotes: 0
     },
     {
       id: 'college_gallery',
       title: 'Full Media & Campus Gallery',
-      status: 'In Progress',
-      statusColor: 'bg-blue-500/10 text-blue-450 border-blue-500/20',
-      percentage: 65,
+      status: 'Planned',
+      statusColor: 'bg-zinc-900 text-zinc-500 border-zinc-800',
+      percentage: 0,
       desc: 'Adding an interactive media section inside the college profile view displaying classrooms, labs, playgrounds, and campus infrastructure.',
       category: 'Visual Content',
-      timeline: 'Q3 2026',
-      upvotes: 218
-    },
-    {
-      id: 'cutoff_predictor',
-      title: 'Previous Year Cut-Off Rank Matcher',
-      status: 'Under Development',
-      statusColor: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-      percentage: 35,
-      desc: 'Create an intelligent filter system to input your EAPCET rank, reservation category, gender, and region to match previous year allotment cutoffs.',
-      category: 'Core Predictor Engine',
-      timeline: 'Q4 2026',
-      upvotes: 384
+      timeline: 'Planned',
+      upvotes: 0
     },
     {
       id: 'placements_stats',
       title: 'Comprehensive Placements Dashboard',
       status: 'Planned',
       statusColor: 'bg-zinc-900 text-zinc-500 border-zinc-800',
-      percentage: 15,
+      percentage: 0,
       desc: 'Integrate verified placement details including average packages, top recruiters, historic placement percentages, and campus placement audit charts.',
       category: 'Institutional Metrics',
-      timeline: 'Q1 2027',
-      upvotes: 295
+      timeline: 'Planned',
+      upvotes: 0
     }
   ];
 
@@ -106,11 +106,11 @@ export default function ProgressPage() {
             <GitPullRequest size={16} className="text-emerald-500" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold text-white">55%</span>
-            <span className="text-[10px] text-emerald-500 font-semibold">+15% this week</span>
+            <span className="text-2xl font-bold text-white">0%</span>
+            <span className="text-[10px] text-zinc-500 font-semibold">Planning phase</span>
           </div>
           <div className="w-full bg-zinc-950 h-1.5 rounded-full overflow-hidden border border-zinc-900">
-            <div className="bg-emerald-500 h-full rounded-full" style={{ width: '55%' }} />
+            <div className="bg-emerald-500 h-full rounded-full" style={{ width: '0%' }} />
           </div>
         </div>
 
@@ -120,11 +120,11 @@ export default function ProgressPage() {
             <Shield size={16} className="text-amber-500" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold text-white">2 / 4</span>
-            <span className="text-[10px] text-zinc-500">Major milestones reached</span>
+            <span className="text-2xl font-bold text-white">0 / 4</span>
+            <span className="text-[10px] text-zinc-500">Not started yet</span>
           </div>
           <div className="w-full bg-zinc-950 h-1.5 rounded-full overflow-hidden border border-zinc-900">
-            <div className="bg-amber-500 h-full rounded-full" style={{ width: '50%' }} />
+            <div className="bg-amber-500 h-full rounded-full" style={{ width: '0%' }} />
           </div>
         </div>
 
@@ -134,7 +134,7 @@ export default function ProgressPage() {
             <MessageSquare size={16} className="text-blue-500" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold text-white">{Object.values(votes).reduce((a, b) => a + b, 0) + 1039}</span>
+            <span className="text-2xl font-bold text-white">{Object.values(votes).reduce((a, b) => a + b, 0)}</span>
             <span className="text-[10px] text-blue-500 font-semibold">Student votes registered</span>
           </div>
           <div className="w-full bg-zinc-950 h-1.5 rounded-full overflow-hidden border border-zinc-900">
