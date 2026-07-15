@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { GraduationCap, Menu, X, LogOut, User } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import HomePage from './pages/HomePage';
 import CollegeListPage from './pages/CollegeListPage';
 import ComparePage from './pages/ComparePage';
@@ -343,6 +344,7 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        <Analytics />
       </div>
     </Router>
   );
