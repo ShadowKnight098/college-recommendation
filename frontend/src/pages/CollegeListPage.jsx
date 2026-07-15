@@ -23,6 +23,7 @@ export default function CollegeListPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [district, setDistrict] = useState('');
   const [region, setRegion] = useState('');
   const [type, setType] = useState('');
@@ -33,6 +34,15 @@ export default function CollegeListPage() {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [viewMode, setViewMode] = useState('card');
+
+  // Debounce search state to update debouncedSearch 250ms after typing stops
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 250);
+    return () => clearTimeout(handler);
+  }, [search]);
 
   // Favorites, Compare & Share States
   const [favorites, setFavorites] = useState(() => {
@@ -142,7 +152,7 @@ export default function CollegeListPage() {
     setLoading(true);
     try {
       const params = {
-        search, district, region, type, autonomous, sortBy, order, page, limit: 12
+        search: debouncedSearch, district, region, type, autonomous, sortBy, order, page, limit: 12
       };
       if (showFavoritesOnly) {
         params.ids = favorites.length > 0 ? favorites.join(',') : '-1';
@@ -155,7 +165,7 @@ export default function CollegeListPage() {
     finally { setLoading(false); }
   };
 
-  useEffect(() => { fetchColleges(); }, [page, district, region, type, autonomous, sortBy, order, showFavoritesOnly]);
+  useEffect(() => { fetchColleges(); }, [page, debouncedSearch, district, region, type, autonomous, sortBy, order, showFavoritesOnly]);
 
   useEffect(() => {
     if (search.trim().length < 2) { setSuggestions([]); return; }
@@ -170,9 +180,7 @@ export default function CollegeListPage() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setPage(1);
     setShowSuggestions(false);
-    fetchColleges();
   };
 
   const toggleSort = (field) => {
@@ -241,9 +249,9 @@ export default function CollegeListPage() {
                   className="flex items-center gap-3 px-3 py-2.5 hover:bg-zinc-800/50 cursor-pointer border-b border-zinc-800/50 last:border-0"
                   onClick={() => {
                     setSearch(s.name);
+                    setDebouncedSearch(s.name); // update immediately to avoid debounce delay on click
                     setSuggestions([]);
                     setShowSuggestions(false);
-                    setTimeout(() => fetchColleges(), 50);
                   }}
                 >
                   <span className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 text-[10px] font-mono font-semibold uppercase flex-shrink-0">
