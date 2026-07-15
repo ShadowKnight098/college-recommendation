@@ -15,6 +15,7 @@ const studentRoutes = require('./routes/studentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5000;
 
 // Apply Helmet security headers with cross-origin resource sharing enabled for static uploads
