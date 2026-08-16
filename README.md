@@ -254,8 +254,8 @@ npm install
 Create a `.env` file inside `backend/`:
 ```env
 PORT=5000
-DATABASE_URL=postgresql://username:password@localhost:5432/college_db
-JWT_SECRET=your_super_secret_jwt_key
+DATABASE_URL=your_database_url_here
+JWT_SECRET=your_jwt_secret_here
 ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173
 ```
 
